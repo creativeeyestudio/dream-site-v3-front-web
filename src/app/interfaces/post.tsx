@@ -1,16 +1,18 @@
-import { ImageProps } from "./_image";
+import { TextProps, TextIntroProps, TextImageProps, TextDoubleImageProps, HeroscreenProps, CarouselProps, ParallaxProps } from "./blocks"
+import { SeoProps } from "./seo"
 
 interface PostProps {
-  id: number;
-  attributes: {
-    title: string;
-    content: string;
-    publishedAt: Date;
-    slug: string;
-    meta_title: string;
-    meta_description: string;
-    main_image: ImageProps;
-  };
+  id: number
+  title: string
+  intro: string
+  slug: string
+  createdAt: Date
+  updatedAt: Date
+  publishedAt: Date
+  documentId: string
+  locale: 'fr-FR' | 'en-EN'
+  content: (TextProps | TextIntroProps | TextImageProps | TextDoubleImageProps | HeroscreenProps | CarouselProps | ParallaxProps)[]
+  seo: SeoProps
 }
 
 export default PostProps

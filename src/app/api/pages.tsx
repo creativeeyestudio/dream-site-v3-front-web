@@ -2,8 +2,6 @@ import axios from "axios";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/api/pages?populate=deep";
 
-console.log(apiUrl);
-
 export async function getHomePage() {
     return initPage(true);
 }
@@ -20,7 +18,7 @@ async function initPage(mainPage: boolean, slug: string | string[] | null = null
 
     const res = await axios.get(apiUrl + paramUrl,  {
       headers: {
-        'Authorization': `Bearer ${process.env. NEXT_PUBLIC_API_TOKEN}`,
+        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
       }
     });
 

@@ -1,12 +1,7 @@
 import Image from "next/image";
 import React from 'react';
-import { ImageProps } from "@/app/interfaces/_image";
 import Ukiyo from "ukiyojs";
-
-interface ParallaxProps {
-    image: ImageProps
-    speed: number
-}
+import { ParallaxProps } from "@/app/interfaces/blocks";
 
 const Parallax: React.FC<ParallaxProps> = (content: ParallaxProps) => {
     
@@ -19,8 +14,8 @@ const Parallax: React.FC<ParallaxProps> = (content: ParallaxProps) => {
         <figure className="prx h-[50vh] overflow-hidden relative">
             <Image
                 className="prx_img"
-                src={process.env.NEXT_PUBLIC_API_URL + content.image.data.attributes.url}
-                alt={content.image.data.attributes.alternativeText}
+                src={process.env.NEXT_PUBLIC_API_URL + content.image.attributes.url}
+                alt={content.image.attributes.alternativeText}
                 fill={true}/>
         </figure>
         </>

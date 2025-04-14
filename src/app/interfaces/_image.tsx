@@ -1,4 +1,4 @@
-interface ImageDataProps {
+export interface ImageDataProps {
   attributes: {
     alternativeText: string;
     mime: string;
