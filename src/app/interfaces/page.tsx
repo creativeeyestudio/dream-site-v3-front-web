@@ -11,11 +11,11 @@ interface PageProps {
     meta_desc: string;
     homepage: boolean,
     secondary_page: boolean;
-    content_page: ContentPage[];
+    content_page: ContentPageItemsProps[];
   };
 }
 
-export interface ContentPage {
+export interface ContentPageItemsProps {
   __component: string;
   title: string;
   text: TextBlock[]

@@ -1,14 +1,10 @@
 import React from 'react';
 import Navigation from './Navigation';
 
-const Header: React.FC<{secondary_page: boolean}> = ({ secondary_page }) => {
-    
-    const baseClasses = 'header';
-    const classes = `${baseClasses} ${secondary_page ? "secondary-page" : ""}`.trim();
-
+const Header: React.FC<{noIntro: boolean}> = ({ noIntro }) => {
     return(
         <>
-        <header className={classes}></header>
+        <header className={noIntro ? 'no-intro' : ''}></header>
         <Navigation menuId={'main-navigation'} />
         </>
     );

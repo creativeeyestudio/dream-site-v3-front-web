@@ -4,10 +4,10 @@ import TextDoubleImage from "../panels/TextDoubleImage";
 import TextImage from "../panels/TextImage";
 import TextIntro from "../panels/TextIntro";
 import Text from "../panels/Text";
-import { ContentPage } from "@/app/interfaces/page";
+import { ContentPageItemsProps } from "@/app/interfaces/page";
 
 interface WebPageProps {
-    blocks: ContentPage[]; // blocks est un tableau d'objets de type ContentPage.
+    blocks: ContentPageItemsProps[]; // blocks est un tableau d'objets de type ContentPage.
   }
 
 const ContentPageItems: React.FC<WebPageProps> = ({ blocks }) => {
