@@ -1,10 +1,9 @@
 import { getHomePage } from "../app/api/pages";
+import { GetStaticProps } from "next";
 import Error from "next/error";
 import PageProps from "@/app/interfaces/page";
-import Head from "next/head";
-import WebPage from "@/app/_components/templates/WebPage";
-import ContentPage from "@/app/_components/layouts/ContentPage";
-import { GetStaticProps } from "next";
+import Layout from "@/components/layout/Layout";
+import ContentPageItems from "@/components/layout/ContentPageItems";
 
 interface PageHomeProps {
   page: PageProps | null;
@@ -18,16 +17,10 @@ const PageHome: React.FC<PageHomeProps> = ({ page, error }) => {
     return <Error statusCode={error ? 500 : 404} />;
   }
 
-  const blocks = page.attributes.content_page;
-
   return (
-    <ContentPage secondary_page={page.attributes.secondary_page}>
-      <Head>
-        <title>{page.attributes.meta_title}</title>
-        <meta name="description" content={page.attributes.meta_desc} />
-      </Head>
-      <WebPage blocks={blocks} />
-    </ContentPage>
+    <Layout secondary_page={page.attributes.secondary_page}>
+      <ContentPageItems blocks={page.attributes.content_page} />
+    </Layout>
   );
 };
 

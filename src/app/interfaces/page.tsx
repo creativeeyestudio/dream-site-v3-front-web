@@ -1,4 +1,4 @@
-import { GalleryImageProps } from "@/app/_components/panels/Gallery";
+import { GalleryImageProps } from "@/components/panels/Gallery";
 import { ImageMultipleProps, ImageProps } from "./_image";
 import PostProps from "./post";
 

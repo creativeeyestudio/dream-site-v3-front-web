@@ -1,12 +1,12 @@
 import { TextBlock } from "@/app/interfaces/page";
 import { JSX } from "react";
 
-interface TextIntroProps {
+interface TextProps {
     title: string;
     content: TextBlock[];
 }
 
-const TextIntro: React.FC<TextIntroProps> = ({ title, content }) => {
+const Text: React.FC<TextProps> = ({ title, content }) => {
     return (
         <section>
             <h2>{title}</h2>
@@ -58,4 +58,4 @@ const TextIntro: React.FC<TextIntroProps> = ({ title, content }) => {
     );
 };
 
-export default TextIntro;
+export default Text;

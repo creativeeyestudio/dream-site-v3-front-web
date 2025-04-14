@@ -1,12 +1,11 @@
 import { GetStaticProps } from 'next';
 import { getPage } from "../app/api/pages";
-import Error from "next/error";
-import Head from "next/head";
-import WebPage from "@/app/_components/templates/WebPage";
-import ContentPage from '@/app/_components/layouts/ContentPage';
-import PageProps from '@/app/interfaces/page';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import Error from "next/error";
+import PageProps from '@/app/interfaces/page';
+import ContentPageItems from '@/components/layout/ContentPageItems';
+import Layout from '@/components/layout/Layout';
 
 interface PageWebProps {
   page: PageProps | null;
@@ -38,16 +37,10 @@ const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
     router.push('/');
   }
 
-  const blocks = page.attributes.content_page;
-
   return (
-    <ContentPage secondary_page={page.attributes.secondary_page}>
-      <Head>
-        <title>{page.attributes.meta_title}</title>
-        <meta name="description" content={page.attributes.meta_desc} />
-      </Head>
-      <WebPage blocks={blocks} />
-    </ContentPage>
+    <Layout secondary_page={page.attributes.secondary_page}>
+      <ContentPageItems blocks={page.attributes.content_page} />
+    </Layout>
   );
 };
 

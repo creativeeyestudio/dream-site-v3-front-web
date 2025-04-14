@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { JSX } from 'react';
 import { ImageProps } from '@/app/interfaces/_image';
 import { LinkItem, TextBlock } from '@/app/interfaces/page';
-import ButtonLink from '../buttonLink';
+import ButtonLink from '../../app/_components/buttonLink';
 
 interface TextImageProps {
     title: string,
