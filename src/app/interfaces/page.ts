@@ -1,5 +1,11 @@
-import { CarouselProps, HeroscreenProps, ParallaxProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
-import { SeoProps } from "./seo"
+import { ParallaxProps, SeoProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
+
+export type BlockProps =
+  TextProps
+  | TextIntroProps
+  | TextImageProps
+  | TextDoubleImageProps
+  | ParallaxProps
 
 export default interface PageProps {
   id: number
@@ -12,6 +18,6 @@ export default interface PageProps {
   publishedAt: Date
   documentId: string
   locale: 'fr-FR' | 'en-EN'
-  content_page: (TextProps | TextIntroProps | TextImageProps | TextDoubleImageProps | HeroscreenProps | CarouselProps | ParallaxProps)[]
+  content_page: BlockProps[]
   seo: SeoProps
 }

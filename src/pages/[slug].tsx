@@ -16,7 +16,7 @@ const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
   const router = useRouter();
   
   useEffect(() => {
-    if (page?.attributes.homepage) {
+    if (page?.homepage) {
       router.push('/');
     }
   }, [page, router]);
@@ -30,16 +30,14 @@ const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
     return <Error statusCode={404} />;
   }
 
-  const isHomepage = page.attributes.homepage;
-
+  const isHomepage = page.homepage;
   if (isHomepage) {
-    console.log("Homepage");
     router.push('/');
   }
 
   return (
-    <Layout secondary_page={page.attributes.secondary_page}>
-      <ContentPageItems blocks={page.attributes.content_page} />
+    <Layout noIntro={page.secondary_page}>
+      <ContentPageItems blocks={page.content_page} />
     </Layout>
   );
 };
@@ -50,14 +48,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   try {
     const response = await getPage(slug);
     
-    if (!response || !response.data || response.data.length === 0) {
+    if (!response) {
       return { notFound: true }
     }
 
-    const page = response.data[0];
-
     return { 
-      props: { page: page, error: null }, 
+      props: { page: response, error: null }, 
       revalidate: 60
     };
   } catch (error) {

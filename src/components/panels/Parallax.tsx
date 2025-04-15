@@ -3,10 +3,10 @@ import React from 'react';
 import Ukiyo from "ukiyojs";
 import { ParallaxProps } from "@/app/interfaces/blocks";
 
-const Parallax: React.FC<ParallaxProps> = (content: ParallaxProps) => {
+const Parallax: React.FC<ParallaxProps> = ({ image, speed }) => {
     
     new Ukiyo('.prx_img', {
-        speed: content.speed ?? 1.5
+        speed: speed ?? 1.5
     });
 
     return(
@@ -14,8 +14,8 @@ const Parallax: React.FC<ParallaxProps> = (content: ParallaxProps) => {
         <figure className="prx h-[50vh] overflow-hidden relative">
             <Image
                 className="prx_img"
-                src={process.env.NEXT_PUBLIC_API_URL + content.image.attributes.url}
-                alt={content.image.attributes.alternativeText}
+                src={process.env.NEXT_PUBLIC_API_URL + image.url}
+                alt={image.alternativeText}
                 fill={true}/>
         </figure>
         </>

@@ -18,25 +18,23 @@ const PageHome: React.FC<PageHomeProps> = ({ page, error }) => {
   }
 
   return (
-    <Layout secondary_page={page.attributes.secondary_page}>
-      <ContentPageItems blocks={page.attributes.content_page} />
+    <Layout noIntro={page.secondary_page}>
+      <ContentPageItems blocks={page.content_page} />
     </Layout>
   );
 };
 
-// Cette fonction sera exécutée côté serveur pour récupérer les données lors de la génération de la page
+
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const response = await getHomePage();
 
-    if (!response || !response.data || response.data.length === 0) {
+    if (!response) {
       return { notFound: true }
     }
-
-    const page = response.data[0];
     
     return { 
-      props: { page: page, error: null }, 
+      props: { page: response, error: null }, 
       revalidate: 60
     };
   } catch (error) {

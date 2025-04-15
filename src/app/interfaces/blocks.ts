@@ -26,6 +26,7 @@ export interface SeoProps {
 }
 
 export interface HTMLContentProps {
+    __component?: 'page.text'
     content: string
 }
 
@@ -36,35 +37,44 @@ export interface GalleryProps {
 // PAGES
 // --------------------------------
 export interface TextProps {
+    __component?: 'page.text'
     title: string
     text: string
-    links?: LinkProps[]
 }
 
 export interface TextIntroProps {
-    content: TextProps
+    __component?: 'page.text-intro'
+    title: string
+    text: string
 }
 
 export interface TextImageProps {
-    content: TextProps
+    __component?: 'page.text-image'
+    title: string
+    text: string
     image: ImageDataProps
 }
 
 export interface TextDoubleImageProps {
-    content: TextProps
+    __component?: 'page.text-double-image'
+    title: string
+    text: string
     image1: ImageDataProps
     image2?: ImageDataProps
 }
 
 export interface HeroscreenProps {
+    __component: string
     images: ImageDataProps[]
 }
 
 export interface CarouselProps {
+    __component?: 'page.carousel'
     images: ImageDataProps[]
 }
 
 export interface ParallaxProps {
+    __component?: 'page.parallax'
     image: ImageDataProps
     speed: number
 }
