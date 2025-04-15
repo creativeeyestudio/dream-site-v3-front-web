@@ -1,7 +1,7 @@
 import { CarouselProps, HeroscreenProps, ParallaxProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
 import { SeoProps } from "./seo"
 
-export interface PageProps {
+export default interface PageProps {
   id: number
   title: string
   slug: string
@@ -15,5 +15,3 @@ export interface PageProps {
   content_page: (TextProps | TextIntroProps | TextImageProps | TextDoubleImageProps | HeroscreenProps | CarouselProps | ParallaxProps)[]
   seo: SeoProps
 }
-
-export default PageProps;

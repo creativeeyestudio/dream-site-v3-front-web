@@ -1,7 +1,7 @@
 import { TextProps, TextIntroProps, TextImageProps, TextDoubleImageProps, HeroscreenProps, CarouselProps, ParallaxProps } from "./blocks"
 import { SeoProps } from "./seo"
 
-interface PostProps {
+export default interface PostProps {
   id: number
   title: string
   intro: string
@@ -14,5 +14,3 @@ interface PostProps {
   content: (TextProps | TextIntroProps | TextImageProps | TextDoubleImageProps | HeroscreenProps | CarouselProps | ParallaxProps)[]
   seo: SeoProps
 }
-
-export default PostProps

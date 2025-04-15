@@ -2,6 +2,9 @@ import { ImageDataProps } from "./_image";
 import PageProps from "./page";
 import PostProps from "./post";
 
+
+// CONTENT
+// --------------------------------
 export interface LinkProps {
     page?: PageProps
     post?: PostProps
@@ -10,6 +13,28 @@ export interface LinkProps {
     label?: string
 }
 
+// COMMON
+// --------------------------------
+export interface SeoProps {
+    id: number
+    meta_title: string
+    meta_desc: string
+    og_title: string
+    og_desc: string
+    twitter_title: string
+    twitter_desc: string
+}
+
+export interface HTMLContentProps {
+    content: string
+}
+
+export interface GalleryProps {
+    images: ImageDataProps[]
+}
+
+// PAGES
+// --------------------------------
 export interface TextProps {
     title: string
     text: string
