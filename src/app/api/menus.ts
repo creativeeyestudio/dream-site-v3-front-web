@@ -1,28 +1,38 @@
 import axios from "axios";
 
-const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/navigation/render`;
+const token = process.env.NEXT_PUBLIC_API_TOKEN;
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const getMenu = async (menuId: string) => {
+if (!token) {
+  throw new Error("API token is missing");
+}
+
+if (!baseUrl) {
+  throw new Error("API URL is missing");
+}
+
+const api = axios.create({
+    baseURL: `${baseUrl}/api`,
+    headers: {
+        Authorization: `Bearer ${token}`,
+    },
+});
+
+const handleError = (error: unknown, context = 'fetch menu') => {
+    if (axios.isAxiosError(error)) {
+        console.error(`${context} – Axios error:`, error.response?.data || error.message);
+    } else {
+        console.error(`${context} – Unexpected error:`, error);
+    }
+    throw new Error(`${context} failed`);
+};
+
+const getMenu = async (menuId: string): Promise<unknown> => {
     try {
-        const response = await fetch(apiUrl + '/' + menuId + '?type=TREE', {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${process.env. NEXT_PUBLIC_API_TOKEN}`
-            }
-        });
-        
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP: ${response.status}`);
-        }
-        
-        const data = await response.json();
+        const { data } = await api.get(`/navigation/render/${menuId}?type=TREE`);
         return data;
-    } catch (error: unknown) {
-        if (axios.isAxiosError(error)) {
-            console.error("Axios error:", error.response?.data || error.message);
-        } else {
-            console.error("Unexpected error:", error);
-        }    
+    } catch (error) {
+        handleError(error, `fetch menu "${menuId}"`);
     }
 };
 
