@@ -1,12 +1,13 @@
 import { TextImageProps } from '@/app/interfaces/blocks';
 import Image from 'next/image';
 
-const TextImage: React.FC<TextImageProps> = ({ title, text, image }) => {
+const TextImage: React.FC<TextImageProps> = ({ title, text, image, first_block }) => {
     return (
         <section>
-            <h2>{ title }</h2>
-
-            {text}
+            <div>
+                {first_block ? <h1>{title}</h1> : <h2>{title}</h2>}
+                {text}
+            </div>
             
             <figure className="text-img_img">
                 <Image

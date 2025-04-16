@@ -19,10 +19,10 @@ export interface SeoProps {
     id: number
     meta_title: string
     meta_desc: string
-    og_title: string
-    og_desc: string
-    twitter_title: string
-    twitter_desc: string
+    og_title?: string
+    og_desc?: string
+    twitter_title?: string
+    twitter_desc?: string
 }
 
 export interface HTMLContentProps {
@@ -40,12 +40,14 @@ export interface TextProps {
     __component?: 'page.text'
     title: string
     text: string
+    first_block: boolean
 }
 
 export interface TextIntroProps {
     __component?: 'page.text-intro'
     title: string
     text: string
+    first_block: boolean
 }
 
 export interface TextImageProps {
@@ -53,6 +55,7 @@ export interface TextImageProps {
     title: string
     text: string
     image: ImageDataProps
+    first_block: boolean
 }
 
 export interface TextDoubleImageProps {
@@ -61,10 +64,11 @@ export interface TextDoubleImageProps {
     text: string
     image1: ImageDataProps
     image2?: ImageDataProps
+    first_block: boolean
 }
 
 export interface HeroscreenProps {
-    __component: string
+    __component?: 'page.heroscreen'
     images: ImageDataProps[]
 }
 

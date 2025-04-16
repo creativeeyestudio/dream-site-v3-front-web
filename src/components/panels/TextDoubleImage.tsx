@@ -2,11 +2,11 @@ import Image from "next/image";
 import React from "react";
 import { TextDoubleImageProps } from "@/app/interfaces/blocks";
 
-const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, image2 }) => {
+const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, image2, first_block }) => {
   return (
     <section className="">
       <div className="">
-        <h2 className="">{title}</h2>
+        {first_block ? <h1>{title}</h1> : <h2>{title}</h2>}
         {text}
       </div>
 

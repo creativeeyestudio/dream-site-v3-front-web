@@ -1,4 +1,4 @@
-import { ParallaxProps, SeoProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
+import { HeroscreenProps, ParallaxProps, SeoProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
 
 export type BlockProps =
   TextProps
@@ -6,6 +6,7 @@ export type BlockProps =
   | TextImageProps
   | TextDoubleImageProps
   | ParallaxProps
+  | HeroscreenProps
 
 export default interface PageProps {
   id: number
