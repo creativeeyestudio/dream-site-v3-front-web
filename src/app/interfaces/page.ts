@@ -8,7 +8,7 @@ export type BlockProps =
   | ParallaxProps
   | HeroscreenProps
 
-export default interface PageProps {
+export interface PageProps {
   id: number
   title: string
   slug: string
@@ -21,4 +21,9 @@ export default interface PageProps {
   locale: 'fr-FR' | 'en-EN'
   content_page: BlockProps[]
   seo: SeoProps
+}
+
+export default interface PageWebProps {
+  page: PageProps;
+  error: string;
 }

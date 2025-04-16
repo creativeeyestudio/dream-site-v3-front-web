@@ -1,16 +1,11 @@
 import { getHomePage } from "../app/api/pages";
 import { GetStaticProps } from "next";
 import Error from "next/error";
-import PageProps from "@/app/interfaces/page";
+import PageWebProps from "@/app/interfaces/page";
 import Layout from "@/components/layout/Layout";
 import ContentPageItems from "@/components/layout/ContentPageItems";
 
-interface PageHomeProps {
-  page: PageProps | null;
-  error: string | null;
-}
-
-const PageHome: React.FC<PageHomeProps> = ({ page, error }) => {
+const PageHome: React.FC<PageWebProps> = ({ page, error }) => {
   
   if (error || !page) {
     console.error(error || "Page non trouvée");

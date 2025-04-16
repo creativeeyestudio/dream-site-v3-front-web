@@ -1,78 +1,63 @@
 import { MenuItem } from '@/app/interfaces/menu';
 import getMenu from '@/app/api/menus';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { GetStaticProps } from 'next';
 
-interface NavigationProps {
-    menuId: string;
-}
+function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
+    const itemMap = new Map<number, MenuItem>()
+    const roots: MenuItem[] = []
 
-const Navigation: React.FC<NavigationProps> = ({menuId}) => {
+    menuItems.forEach(item => {
+        item.items = [];
+        itemMap.set(item.id, item);
+    })
 
-    const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        async function fetchMenuItems() {
-            try {
-                setIsLoading(true); // Active le chargement
-                const menuData = await getMenu(menuId); // Appel à l'API
-                const items: MenuItem[] = menuData;
-                setMenuItems(items); // Définit les éléments du menu
-            } catch (error) {
-                console.error("Error fetching menu:", error);
-                setMenuItems([]); // Réinitialise les items en cas d'erreur
-            } finally {
-                setIsLoading(false); // Désactive le chargement
+    menuItems.forEach(item => {
+        if (item.parent && item.parent.id) {
+            const parent = itemMap.get(item.parent.id);
+            if (parent) {
+                parent.items?.push(item);
             }
-        }
-    
-        if (menuId) {
-            fetchMenuItems();
         } else {
-            console.error("Menu with " + menuId + " not found !");
+            roots.push(item);
         }
-    }, [menuId]);
+    });
 
-    if (isLoading) {
-        return <p></p>;
-    }
-
-    return(
-        <>
-            <nav>
-                <ul>
-                    {menuItems?.length > 0 ? menuItems.map((item) => (
-                        <li key={item.id}>
-                            {item.path ? (
-                                <Link href={item.path}>
-                                    {item.title}
-                                </Link>
-                            ) : (
-                                <span>{item.title}</span>
-                            )}
-
-                            {item.items.length > 0 && (
-                                <ul>
-                                    {item.items.map((subItem) => (
-                                        <li key={subItem.id}>
-                                            {subItem.path ? (
-                                                <Link href={subItem.path}>
-                                                    {subItem.title}
-                                                </Link>
-                                            ) : (
-                                                <span>{subItem.title}</span>
-                                            )}
-                                        </li>
-                                    ))}
-                                </ul>
-                            )}
-                        </li>
-                    )) : <></>}
-                </ul>
-            </nav>
-        </>
-    );
+    return roots;
 }
+
+const Navigation: React.FC<{ menuItems: MenuItem[] }> = ({ menuItems }) => {
+    const renderMenu = (items: MenuItem[]) => (
+        <ul>
+            {items.map((item) => (
+                <li key={item.id}>
+                    {item.type === 'INTERNAL' ? (
+                        <a href={`/${item.related?.slug || ''}`}>{item.title}</a>
+                    ) : (
+                        <a href={item.externalPath || '#'} target="_blank" rel="noopener noreferrer">
+                            {item.title}
+                        </a>
+                    )}
+                    {item.items && item.items.length > 0 && renderMenu(item.items)}
+                </li>
+            ))}
+        </ul>
+    );
+  
+    return <nav>{renderMenu(menuItems)}</nav>;
+};
+  
 
 export default Navigation;
+
+export const getStaticProps: GetStaticProps = async () => {
+    try {
+        const data = await getMenu('main-navigation');
+        const tree = buildMenuTree(data as MenuItem[]);
+        return { props: { menuItems: tree } };
+    } catch (e) {
+        console.error(e);
+        return { props: { menuItems: [] } };
+    }
+};
+  

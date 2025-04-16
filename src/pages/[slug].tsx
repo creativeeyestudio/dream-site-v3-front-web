@@ -3,14 +3,9 @@ import { getPage } from "../app/api/pages";
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Error from "next/error";
-import PageProps from '@/app/interfaces/page';
+import PageWebProps from '@/app/interfaces/page';
 import ContentPageItems from '@/components/layout/ContentPageItems';
 import Layout from '@/components/layout/Layout';
-
-interface PageWebProps {
-  page: PageProps;
-  error: string;
-}
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
   const router = useRouter();
@@ -21,13 +16,9 @@ const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
     }
   }, [page, router]);
   
-  if (error) {
-    console.error(error);
-    return <Error statusCode={500} />;
-  }
-
-  if (!page) {
-    return <Error statusCode={404} />;
+  if (error || !page) {
+    console.error(error || "Page non trouvée");
+    return <Error statusCode={error ? 500 : 404} />;
   }
 
   const isHomepage = page.homepage;

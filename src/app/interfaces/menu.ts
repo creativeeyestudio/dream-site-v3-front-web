@@ -1,26 +1,13 @@
-export interface Menu {
-    menuItems: MenuItem[]
-}
+import PageProps from "./page"
 
 export interface MenuItem {
     id: number
     title: string
-    menuAttached: boolean
-    order: number
+    type: 'INTERNAL' | 'EXTERNAL'
     path: string
-    type: string
-    uiRouterKey: string
-    slug: string
-    external: boolean
-    items: MenuItem[]
-    nav_image: MenuItemImage | null
-}
-
-interface MenuItemImage {
-    name: string
-    url: string
-    mime: string
-    width: number
-    height: number
-    previewUrl: string | null
+    externalPath: string
+    order: number
+    related: PageProps
+    parent: MenuItem
+    items?: MenuItem[]
 }
