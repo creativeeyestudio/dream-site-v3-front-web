@@ -1,20 +1,16 @@
-import { GalleryProps } from '@/app/interfaces/_image';
+import { GalleryProps } from '@/app/interfaces/blocks';
 import Image from 'next/image';
-
-export interface GalleryImageProps {
-    data: GalleryProps[];
-}
 
 const thumbSize: number = 100;
 
-const Gallery: React.FC<GalleryImageProps> = (content: GalleryImageProps) => {
+const Gallery: React.FC<GalleryProps> = ({ images }) => {
     return(
         <>
-            {content.data.map((image, index) => (
+            {images.map((image, index: number) => (
                 <figure key={index}>
                     <Image 
-                        src={process.env. NEXT_PUBLIC_API_TOKEN + image.attributes.url} 
-                        alt={image.attributes.alternativeText ?? `Galerie Image ${index + 1}`}
+                        src={process.env.NEXT_PUBLIC_API_TOKEN + image.url} 
+                        alt={image.alternativeText ?? `Galerie Image ${index + 1}`}
                         width={thumbSize}
                         height={thumbSize}
                         style={{objectFit: 'cover', objectPosition: 'center'}}

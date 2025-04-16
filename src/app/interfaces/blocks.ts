@@ -1,4 +1,4 @@
-import { ImageDataProps } from "./_image";
+import { ImageDataProps } from "./image";
 import PageProps from "./page";
 import PostProps from "./post";
 
@@ -25,12 +25,18 @@ export interface SeoProps {
     twitter_desc?: string
 }
 
+export interface VideoBlockProps {
+    __component?: 'common.block_video'
+    video_url: string
+}
+
 export interface HTMLContentProps {
-    __component?: 'page.text'
+    __component?: 'common.html_content'
     content: string
 }
 
 export interface GalleryProps {
+    __component?: 'common.gallery'
     images: ImageDataProps[]
 }
 
