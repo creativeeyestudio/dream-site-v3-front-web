@@ -1,7 +1,11 @@
 import React from 'react';
 import Navigation from './Navigation';
 
-const Header: React.FC<{noIntro: boolean}> = ({ noIntro }) => {
+interface HeaderProps {
+    noIntro: boolean
+}
+
+const Header: React.FC<HeaderProps> = ({ noIntro }) => {
     return(
         <>
         <header className={noIntro ? 'no-intro' : ''}></header>

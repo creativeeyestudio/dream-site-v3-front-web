@@ -8,8 +8,8 @@ import ContentPageItems from '@/components/layout/ContentPageItems';
 import Layout from '@/components/layout/Layout';
 
 interface PageWebProps {
-  page: PageProps | null;
-  error: string | null;
+  page: PageProps;
+  error: string;
 }
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {

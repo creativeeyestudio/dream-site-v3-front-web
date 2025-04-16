@@ -1,14 +1,18 @@
 import Text from "../panels/Text";
-import PageProps from "@/app/interfaces/page";
 import TextIntro from "../panels/TextIntro";
 import TextImage from "../panels/TextImage";
 import TextDoubleImage from "../panels/TextDoubleImage";
 import Parallax from "../panels/Parallax";
 import Heroscreen from "../panels/Heroscreen";
+import { BlockProps } from "@/app/interfaces/page";
 
-const ContentPageItems: React.FC<PageProps> = ({ content_page }) => {
+interface ContentPageItemsProps {
+  blocks: BlockProps[];
+}
+
+const ContentPageItems: React.FC<ContentPageItemsProps> = ({ blocks }) => {
     return <>
-      {content_page.map((block, index) => {
+      {blocks.map((block, index) => {
         switch (block.__component) {
           case "page.text":
             return (
