@@ -1,7 +1,11 @@
 import { MenuItem } from '@/app/interfaces/menu';
 import getMenu from '@/app/api/menus';
-import React from 'react';
-import { GetStaticProps } from 'next';
+import React, { useEffect, useState } from 'react';
+
+interface NavigationProps {
+    menuId: string
+    images: boolean
+}
 
 function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
     const itemMap = new Map<number, MenuItem>()
@@ -13,7 +17,7 @@ function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
     })
 
     menuItems.forEach(item => {
-        if (item.parent && item.parent.id) {
+        if (item.parent?.id) {
             const parent = itemMap.get(item.parent.id);
             if (parent) {
                 parent.items?.push(item);
@@ -26,38 +30,57 @@ function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
     return roots;
 }
 
-const Navigation: React.FC<{ menuItems: MenuItem[] }> = ({ menuItems }) => {
-    const renderMenu = (items: MenuItem[]) => (
+const Navigation: React.FC<NavigationProps> = ({ menuId, images }) => {
+    const [menuItems, setMenusItems] = useState<MenuItem[]>([]);
+
+    useEffect(() => {
+        const fetchMenu = async () => {
+            try {
+                const data = await getMenu(menuId);
+                const tree = buildMenuTree(data as MenuItem[]);
+                setMenusItems(tree);
+            } catch (error) {
+                console.error("Erreur lors du chargement du menu", error);                
+            }
+        }
+
+        fetchMenu()
+    }, [menuId])
+
+
+    const renderMenu = (items: MenuItem[] | undefined) => (
         <ul>
-            {items.map((item) => (
+            {items?.map((item) => (
                 <li key={item.id}>
-                    {item.type === 'INTERNAL' ? (
-                        <a href={`/${item.related?.slug || ''}`}>{item.title}</a>
+                    {item.items && item.items.length > 0 ? (
+                    <>
+                        <span className="sub-menu-title">{item.title}</span>
+                        {renderMenu(item.items)}
+                    </>
                     ) : (
-                        <a href={item.externalPath || '#'} target="_blank" rel="noopener noreferrer">
-                            {item.title}
-                        </a>
+                    <>
+                        {item.type === "INTERNAL" ? (
+                           <a href={`/${item.related?.page.slug || ""}`}>{item.title}</a>
+                        ) : (
+                            <a href={item.externalPath || "#"} target="_blank" rel="noopener noreferrer">
+                                {item.title}
+                            </a>
+                        )}
+                    </>
                     )}
-                    {item.items && item.items.length > 0 && renderMenu(item.items)}
                 </li>
             ))}
         </ul>
     );
   
-    return <nav>{renderMenu(menuItems)}</nav>;
+    return images 
+        ? <nav>{renderMenu(menuItems)}</nav> 
+        : <>
+            <nav>{renderMenu(menuItems)}</nav>
+            <div className='nav-images'></div>
+        </>;
 };
   
 
 export default Navigation;
-
-export const getStaticProps: GetStaticProps = async () => {
-    try {
-        const data = await getMenu('main-navigation');
-        const tree = buildMenuTree(data as MenuItem[]);
-        return { props: { menuItems: tree } };
-    } catch (e) {
-        console.error(e);
-        return { props: { menuItems: [] } };
-    }
-};
   

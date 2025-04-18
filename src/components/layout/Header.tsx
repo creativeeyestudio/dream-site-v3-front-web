@@ -9,7 +9,7 @@ const Header: React.FC<HeaderProps> = ({ noIntro }) => {
     return(
         <>
         <header className={noIntro ? 'no-intro' : ''}></header>
-        <Navigation menuId={'main-navigation'} />
+        <Navigation menuId={'main-navigation'} images={true} />
         </>
     );
 }
