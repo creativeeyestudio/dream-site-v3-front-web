@@ -7,7 +7,7 @@ interface HtmlContentProps {
 const HtmlContent: React.FC<HtmlContentProps> = (content: HtmlContentProps) => {
     return(
         <>
-            {content.htmlContent}
+        <div dangerouslySetInnerHTML={{ __html: content.htmlContent }}></div>
         </>
     )
 }

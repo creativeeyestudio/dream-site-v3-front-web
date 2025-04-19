@@ -5,8 +5,8 @@ const TextImage: React.FC<TextImageProps> = ({ title, text, image, first_block }
     return (
         <section>
             <div>
-                {first_block ? <h1>{title}</h1> : <h2>{title}</h2>}
-                {text}
+                { first_block ? <h1>{title}</h1> : <h2>{title}</h2> }
+                <div className="text" dangerouslySetInnerHTML={{ __html: text }}></div>
             </div>
             
             <figure className="text-img_img">

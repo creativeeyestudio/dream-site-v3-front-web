@@ -10,7 +10,6 @@ export default interface PostProps {
   updatedAt: Date
   publishedAt: Date
   documentId: string
-  locale: 'fr-FR' | 'en-EN'
   content: (TextProps | TextIntroProps | TextImageProps | TextDoubleImageProps | HeroscreenProps | CarouselProps | ParallaxProps)[]
   seo: SeoProps
 }

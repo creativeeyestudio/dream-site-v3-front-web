@@ -4,7 +4,7 @@ const token = process.env.NEXT_PUBLIC_API_TOKEN;
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
 if (!token) {
-  throw new Error("API token is missing");
+  throw new Error("API TOKEN is missing");
 }
 
 if (!baseUrl) {

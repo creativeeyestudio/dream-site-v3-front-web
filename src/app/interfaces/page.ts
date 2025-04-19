@@ -1,4 +1,4 @@
-import { HeroscreenProps, ParallaxProps, SeoProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
+import { GalleryProps, HeroscreenProps, HTMLContentProps, ParallaxProps, SeoProps, TextDoubleImageProps, TextImageProps, TextIntroProps, TextProps } from "./blocks"
 
 export type BlockProps =
   TextProps
@@ -7,8 +7,10 @@ export type BlockProps =
   | TextDoubleImageProps
   | ParallaxProps
   | HeroscreenProps
+  | GalleryProps
+  | HTMLContentProps
 
-export interface PageProps {
+interface PageProps {
   id: number
   title: string
   slug: string
@@ -18,9 +20,9 @@ export interface PageProps {
   updatedAt: Date
   publishedAt: Date
   documentId: string
-  locale: 'fr-FR' | 'en-EN'
   content_page: BlockProps[]
   seo: SeoProps
+  error: string;
 }
 
 export default interface PageWebProps {

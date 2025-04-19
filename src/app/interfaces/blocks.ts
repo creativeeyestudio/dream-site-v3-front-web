@@ -21,8 +21,10 @@ export interface SeoProps {
     meta_desc: string
     og_title?: string
     og_desc?: string
+    social_image?: ImageDataProps
     twitter_title?: string
     twitter_desc?: string
+    twitter_image?: ImageDataProps
 }
 
 export interface VideoBlockProps {
@@ -46,6 +48,7 @@ export interface TextProps {
     __component?: 'page.text'
     title: string
     text: string
+    links?: LinkProps[]
     first_block: boolean
 }
 
@@ -53,6 +56,7 @@ export interface TextIntroProps {
     __component?: 'page.text-intro'
     title: string
     text: string
+    links?: LinkProps[]
     first_block: boolean
 }
 
@@ -60,6 +64,7 @@ export interface TextImageProps {
     __component?: 'page.text-image'
     title: string
     text: string
+    links?: LinkProps[]
     image: ImageDataProps
     first_block: boolean
 }
@@ -68,6 +73,7 @@ export interface TextDoubleImageProps {
     __component?: 'page.text-double-image'
     title: string
     text: string
+    links?: LinkProps[]
     image1: ImageDataProps
     image2?: ImageDataProps
     first_block: boolean

@@ -6,8 +6,8 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, 
   return (
     <section className="">
       <div className="">
-        {first_block ? <h1>{title}</h1> : <h2>{title}</h2>}
-        {text}
+        { first_block ? <h1>{title}</h1> : <h2>{title}</h2> }
+        <div className="text" dangerouslySetInnerHTML={{ __html: text }}></div>
       </div>
 
       <figure className="">
