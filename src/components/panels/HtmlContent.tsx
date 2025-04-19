@@ -1,13 +1,10 @@
+import { HTMLContentProps } from '@/app/interfaces/blocks';
 import React from 'react';
 
-interface HtmlContentProps {
-    htmlContent: string;
-}
-
-const HtmlContent: React.FC<HtmlContentProps> = (content: HtmlContentProps) => {
+const HtmlContent: React.FC<HTMLContentProps> = (content: HTMLContentProps) => {
     return(
         <>
-        <div dangerouslySetInnerHTML={{ __html: content.htmlContent }}></div>
+        <div dangerouslySetInnerHTML={{ __html: content.content }}></div>
         </>
     )
 }

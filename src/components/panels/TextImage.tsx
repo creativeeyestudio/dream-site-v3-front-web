@@ -2,14 +2,16 @@ import { TextImageProps } from '@/app/interfaces/blocks';
 import Image from 'next/image';
 
 const TextImage: React.FC<TextImageProps> = ({ title, text, image, first_block }) => {
-    return (
-        <section>
-            <div>
-                { first_block ? <h1>{title}</h1> : <h2>{title}</h2> }
+	const TitleTag = first_block ? 'h1' : 'h2';
+
+	return (
+        <section className='text-img'>
+            <div className='text-img_content'>
+                <TitleTag>{ title }</TitleTag>
                 <div className="text" dangerouslySetInnerHTML={{ __html: text }}></div>
             </div>
             
-            <figure className="text-img_img">
+            <figure className="text-img_image">
                 <Image
                     src={process.env.NEXT_PUBLIC_API_URL + image.url}
                     width={image.width}
