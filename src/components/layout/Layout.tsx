@@ -2,11 +2,13 @@ import Footer from "./Footer";
 import Header from "./Header";
 import React from "react";
 
-const Layout: React.FC<{ children: React.ReactNode, secondary_page: boolean }> = ({ children, secondary_page }) => {
+const Layout: React.FC<{ children: React.ReactNode, noIntro: boolean }> = ({ children, noIntro }) => {
     return(
         <>
-            <Header secondary_page={secondary_page} />
-            <main>{children}</main>
+            <Header noIntro={noIntro} />
+            <main>
+                {children}
+            </main>
             <Footer />
         </>
     )

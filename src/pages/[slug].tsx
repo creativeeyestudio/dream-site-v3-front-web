@@ -1,46 +1,33 @@
 import { GetStaticProps } from 'next';
 import { getPage } from "../app/api/pages";
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import Error from "next/error";
-import PageProps from '@/app/interfaces/page';
+import PageWebProps from '@/app/interfaces/page';
 import ContentPageItems from '@/components/layout/ContentPageItems';
 import Layout from '@/components/layout/Layout';
-
-interface PageWebProps {
-  page: PageProps | null;
-  error: string | null;
-}
+import HeadSeo from '@/components/seo/HeadSeo';
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
+  
   const router = useRouter();
   
-  useEffect(() => {
-    if (page?.attributes.homepage) {
-      router.push('/');
-    }
-  }, [page, router]);
-  
-  if (error) {
-    console.error(error);
-    return <Error statusCode={500} />;
+  if (error || !page) {
+    console.error(error || "Page non trouvée");
+    return <Error statusCode={error ? 500 : 404} />;
   }
 
-  if (!page) {
-    return <Error statusCode={404} />;
-  }
-
-  const isHomepage = page.attributes.homepage;
-
+  const isHomepage = page.homepage;
   if (isHomepage) {
-    console.log("Homepage");
     router.push('/');
   }
 
   return (
-    <Layout secondary_page={page.attributes.secondary_page}>
-      <ContentPageItems blocks={page.attributes.content_page} />
-    </Layout>
+    <>
+      <HeadSeo content={PageWeb.arguments} type={'website'} path={router.pathname ?? ''}></HeadSeo>
+      <Layout noIntro={page.secondary_page}>
+        <ContentPageItems blocks={page.content_page} />
+      </Layout>
+    </>
   );
 };
 
@@ -50,14 +37,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   try {
     const response = await getPage(slug);
     
-    if (!response || !response.data || response.data.length === 0) {
+    if (!response) {
       return { notFound: true }
     }
 
-    const page = response.data[0];
-
     return { 
-      props: { page: page, error: null }, 
+      props: { page: response, error: null }, 
       revalidate: 60
     };
   } catch (error) {

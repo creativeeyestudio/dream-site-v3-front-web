@@ -3,7 +3,8 @@
 .git/
 build/
 node_modules/
+.next/
 .env
 data/
 backup/
-Dockerfile
+npm-debug.log

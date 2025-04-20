@@ -1,16 +1,15 @@
 import { getHomePage } from "../app/api/pages";
 import { GetStaticProps } from "next";
+import { usePathname } from "next/navigation";
 import Error from "next/error";
-import PageProps from "@/app/interfaces/page";
+import PageWebProps from "@/app/interfaces/page";
 import Layout from "@/components/layout/Layout";
 import ContentPageItems from "@/components/layout/ContentPageItems";
+import HeadSeo from "@/components/seo/HeadSeo";
 
-interface PageHomeProps {
-  page: PageProps | null;
-  error: string | null;
-}
+const PageHome: React.FC<PageWebProps> = ({ page, error }) => {
 
-const PageHome: React.FC<PageHomeProps> = ({ page, error }) => {
+  const pathName = usePathname();
   
   if (error || !page) {
     console.error(error || "Page non trouvée");
@@ -18,25 +17,26 @@ const PageHome: React.FC<PageHomeProps> = ({ page, error }) => {
   }
 
   return (
-    <Layout secondary_page={page.attributes.secondary_page}>
-      <ContentPageItems blocks={page.attributes.content_page} />
-    </Layout>
+    <>
+      <HeadSeo content={PageHome.arguments} type={'website'} path={pathName ?? ''}></HeadSeo>
+      <Layout noIntro={page.secondary_page}>
+        <ContentPageItems blocks={page.content_page} />
+      </Layout>
+    </>
   );
 };
 
-// Cette fonction sera exécutée côté serveur pour récupérer les données lors de la génération de la page
+
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const response = await getHomePage();
 
-    if (!response || !response.data || response.data.length === 0) {
+    if (!response) {
       return { notFound: true }
     }
-
-    const page = response.data[0];
     
     return { 
-      props: { page: page, error: null }, 
+      props: { page: response, error: null }, 
       revalidate: 60
     };
   } catch (error) {
@@ -44,5 +44,6 @@ export const getStaticProps: GetStaticProps = async () => {
     return { props: { page: null, error: "Erreur lors du chargement de la page" + error } };
   }
 };
+
 
 export default PageHome;
