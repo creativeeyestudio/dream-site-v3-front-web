@@ -1,3 +1,5 @@
+'use client'
+
 import { MenuItem } from '@/interfaces/menu';
 import getMenu from '@/api/menus';
 import React, { useEffect, useState } from 'react';
