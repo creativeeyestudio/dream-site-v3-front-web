@@ -1,5 +1,5 @@
-import { MenuItem } from '@/app/interfaces/menu';
-import getMenu from '@/app/api/menus';
+import { MenuItem } from '@/interfaces/menu';
+import getMenu from '@/api/menus';
 import React, { useEffect, useState } from 'react';
 
 interface NavigationProps {

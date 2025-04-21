@@ -1,4 +1,4 @@
-import { BlockProps } from "@/app/interfaces/page"
+import { BlockProps } from "@/interfaces/page"
 import Text from "../panels/Text"
 import TextIntro from "../panels/TextIntro"
 import TextImage from "../panels/TextImage"
@@ -48,7 +48,7 @@ const ContentPageItems: React.FC<ContentPageItemsProps> = ({ blocks }) => {
             )
           case "common.html_content":
             return (
-              <HtmlContent htmlContent={block.content} key={index}></HtmlContent>
+              <HtmlContent content={block.content} key={index}></HtmlContent>
             )
           default:
             return <></>

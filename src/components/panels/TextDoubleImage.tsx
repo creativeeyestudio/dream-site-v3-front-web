@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import { TextDoubleImageProps } from "@/app/interfaces/blocks";
+import { TextDoubleImageProps } from "@/interfaces/blocks";
 
 const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, image2, first_block }) => {
 	const TitleTag = first_block ? 'h1' : 'h2';

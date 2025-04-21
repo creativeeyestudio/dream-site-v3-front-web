@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from 'react';
 import Ukiyo from "ukiyojs";
-import { ParallaxProps } from "@/app/interfaces/blocks";
+import { ParallaxProps } from "@/interfaces/blocks";
 
 const Parallax: React.FC<ParallaxProps> = ({ image, speed }) => {
     

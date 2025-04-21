@@ -1,9 +1,9 @@
-import { getHomePage } from "../app/api/pages";
+import { getHomePage } from "../api/pages";
 import { GetStaticProps } from "next";
 import { usePathname } from "next/navigation";
 import Error from "next/error";
-import PageWebProps from "@/app/interfaces/page";
-import Layout from "@/components/layout/Layout";
+import PageWebProps from "@/interfaces/page";
+import Layout from "@/app/Layout";
 import ContentPageItems from "@/components/layout/ContentPageItems";
 import HeadSeo from "@/components/seo/HeadSeo";
 

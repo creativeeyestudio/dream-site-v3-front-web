@@ -1,5 +1,5 @@
 import Head from "next/head";
-import PageProps from "@/app/interfaces/page";
+import PageProps from "@/interfaces/page";
 
 interface HeadSeoComponentProps {
   content: PageProps;

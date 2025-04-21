@@ -1,10 +1,10 @@
 import { GetStaticProps } from 'next';
-import { getPage } from "../app/api/pages";
+import { getPage } from "../api/pages";
 import { useRouter } from 'next/router';
 import Error from "next/error";
-import PageWebProps from '@/app/interfaces/page';
+import PageWebProps from '@/interfaces/page';
 import ContentPageItems from '@/components/layout/ContentPageItems';
-import Layout from '@/components/layout/Layout';
+import Layout from '@/app/Layout';
 import HeadSeo from '@/components/seo/HeadSeo';
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {

@@ -1,4 +1,4 @@
-import { TextIntroProps } from "@/app/interfaces/blocks";
+import { TextIntroProps } from "@/interfaces/blocks";
 
 const TextIntro: React.FC<TextIntroProps> = ({ title, text, first_block }) => {
     return(
