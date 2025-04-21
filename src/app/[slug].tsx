@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Error from "next/error";
 import PageWebProps from '@/interfaces/page';
 import ContentPageItems from '@/components/layout/ContentPageItems';
-import Layout from '@/app/Layout';
+import Layout from '@/app/layout';
 import HeadSeo from '@/components/seo/HeadSeo';
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {

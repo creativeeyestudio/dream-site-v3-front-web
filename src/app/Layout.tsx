@@ -5,11 +5,15 @@ import React from "react";
 const Layout: React.FC<{ children: React.ReactNode, noIntro: boolean }> = ({ children, noIntro }) => {
     return(
         <>
-            <Header noIntro={noIntro} />
-            <main>
-                {children}
-            </main>
-            <Footer />
+            <html>
+                <body>
+                    <Header noIntro={noIntro} />
+                    <main>
+                        {children}
+                    </main>
+                    <Footer />
+                </body>
+            </html>
         </>
     )
 }

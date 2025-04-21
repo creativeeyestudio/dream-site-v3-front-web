@@ -3,7 +3,7 @@ import { GetStaticProps } from "next";
 import { usePathname } from "next/navigation";
 import Error from "next/error";
 import PageWebProps from "@/interfaces/page";
-import Layout from "@/app/Layout";
+import Layout from "@/app/layout";
 import ContentPageItems from "@/components/layout/ContentPageItems";
 import HeadSeo from "@/components/seo/HeadSeo";
 
