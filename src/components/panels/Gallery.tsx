@@ -1,4 +1,4 @@
-import { GalleryProps } from '@/app/interfaces/blocks';
+import { GalleryProps } from '@/interfaces/blocks';
 import Image from 'next/image';
 
 const thumbSize: number = 100;

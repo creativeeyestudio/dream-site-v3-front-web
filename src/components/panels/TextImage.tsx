@@ -1,4 +1,4 @@
-import { TextImageProps } from '@/app/interfaces/blocks';
+import { TextImageProps } from '@/interfaces/blocks';
 import Image from 'next/image';
 
 const TextImage: React.FC<TextImageProps> = ({ title, text, image, first_block }) => {

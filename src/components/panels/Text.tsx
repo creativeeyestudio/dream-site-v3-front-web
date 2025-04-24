@@ -1,4 +1,4 @@
-import { TextProps } from "@/app/interfaces/blocks";
+import { TextProps } from "@/interfaces/blocks";
 
 const Text: React.FC<TextProps> = ({ title, text, first_block }) => {
     const TitleTag = first_block ? 'h1' : 'h2';

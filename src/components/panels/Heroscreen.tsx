@@ -8,7 +8,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { HeroscreenProps } from "@/app/interfaces/blocks";
+import { HeroscreenProps } from "@/interfaces/blocks";
 
 const Heroscreen: React.FC<HeroscreenProps> = (content: HeroscreenProps) => {
   
