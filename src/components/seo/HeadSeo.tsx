@@ -1,34 +1,35 @@
 import Head from "next/head";
-import PageProps from "@/app/interfaces/page";
+import { SeoProps } from "@/interfaces/seo";
 
 interface HeadSeoComponentProps {
-  content: PageProps;
+  content: SeoProps;
   type: string;
-  path: string;
 }
 
-const HeadSeo: React.FC<HeadSeoComponentProps> = ({ content, type, path }) => {
-  const seoData = content.page.seo;
+const HeadSeo: React.FC<HeadSeoComponentProps> = ({ content, type }) => {
 
-  return (
+  return content ? (
     <Head>
-      <title>{seoData.meta_title}</title>
-      <meta name="description" content={seoData.meta_desc} />
-      <link rel="canonical" href={path} />
+      <title>{content.meta_title}</title>
+      <meta name="description" content={content.meta_desc} />
 
       {/* Open Graph */}
-      <meta property="og:title" content={seoData.og_title ?? seoData.meta_title} />
-      <meta property="og:description" content={seoData.og_desc ?? seoData.meta_desc} />
       <meta property="og:type" content={type} />
-      <meta property="og:image" content={seoData.social_image?.url ?? ''} />
+      <meta property="og:title" content={content.og_title ?? content.meta_title} />
+      <meta property="og:description" content={content.og_desc ?? content.meta_desc} />
+      {content.social_image 
+        ? <meta property="og:image" content={content.social_image.url} /> 
+        : <></>}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={seoData.twitter_title} />
-      <meta name="twitter:description" content={seoData.twitter_desc} />
-      <meta name="twitter:image" content={seoData.twitter_image?.url ?? ''} />
+      <meta name="twitter:title" content={content.twitter_title ?? content.meta_title} />
+      <meta name="twitter:description" content={content.twitter_desc ?? content.meta_desc} />
+      {content.twitter_image 
+        ? <meta name="twitter:image" content={content.twitter_image.url} />
+        : <></>}
     </Head>
-  );
+  ) : <></>;
 };
 
 export default HeadSeo;

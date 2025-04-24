@@ -12,7 +12,7 @@ if (!baseUrl) {
 }
 
 const api = axios.create({
-	baseURL: `${baseUrl}/api`,
+	baseURL: `${baseUrl}/api/pages`,
 	headers: {
 		Authorization: `Bearer ${token}`,
 	},
@@ -35,13 +35,12 @@ async function initPage({ mainPage = false, slug = null }: { mainPage?: boolean;
 	try {
 		const formattedSlug = Array.isArray(slug) ? slug[0] : slug;
 
-		const filters = mainPage
-			? "filters[homepage][$eq]=true"
-			: `filters[slug][$eq]=${formattedSlug}`;
-
-		const query = `/pages?populate[1]=content_page&populate[2]=seo&${filters}`;
+		const query = mainPage
+			? "/home"
+			: `/slug/${formattedSlug}`;
 
 		const { data } = await api.get(query);
+		
 		return data;
 	} catch (error) {
 		handleError(error, mainPage ? 'fetch homepage' : 'fetch page');

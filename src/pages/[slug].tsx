@@ -1,15 +1,13 @@
-import { GetStaticProps } from 'next';
-import { getPage } from "../app/api/pages";
-import { useRouter } from 'next/router';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { getPage } from "../api/pages";
+import Router from 'next/router';
 import Error from "next/error";
-import PageWebProps from '@/app/interfaces/page';
+import PageWebProps from '@/interfaces/page';
 import ContentPageItems from '@/components/layout/ContentPageItems';
 import Layout from '@/components/layout/Layout';
 import HeadSeo from '@/components/seo/HeadSeo';
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
-  
-  const router = useRouter();
   
   if (error || !page) {
     console.error(error || "Page non trouvée");
@@ -18,18 +16,32 @@ const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
 
   const isHomepage = page.homepage;
   if (isHomepage) {
-    router.push('/');
+    Router.push('/')
   }
 
   return (
     <>
-      <HeadSeo content={PageWeb.arguments} type={'website'} path={router.pathname ?? ''}></HeadSeo>
+      <HeadSeo content={page.seo} type={'website'}></HeadSeo>
       <Layout noIntro={page.secondary_page}>
         <ContentPageItems blocks={page.content_page} />
       </Layout>
     </>
   );
 };
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = ["qui-sommes-nous", "contact", "mentions-legales"]; // Ajoute ce que tu veux
+
+  const paths = slugs.map((slug) => ({
+    params: { slug },
+  }));
+
+  return {
+    paths,
+    fallback: 'blocking', // ou false
+  };
+};
+
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params!;
