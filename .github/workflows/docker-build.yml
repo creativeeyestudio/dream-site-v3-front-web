@@ -34,5 +34,8 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker tag dreamsite-admin:${{ github.ref_name }} kevinad/dreamsite-admin:${{ github.ref_name }}
-          docker push kevinad/dreamsite-admin:${{ github.ref_name }}
+          docker tag dreamsite-web-front:${{ github.ref_name }} kevinad/dreamsite-web-front:${{ github.ref_name }}
+          docker tag dreamsite-web-front:${{ github.ref_name }} kevinad/dreamsite-web-front:latest
+          
+          docker push kevinad/dreamsite-web-front:${{ github.ref_name }}
+          docker push kevinad/dreamsite-web-front:latest
