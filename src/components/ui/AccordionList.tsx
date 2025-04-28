@@ -15,9 +15,7 @@ export default function AccordionList(
             key={index} 
             aria-label="" 
             title=""
-            subtitle="">
-
-        </AccordionItem>
+            subtitle=""></AccordionItem>
       ))}
     </Accordion>
   );

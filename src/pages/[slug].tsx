@@ -1,65 +1,64 @@
-import { GetServerSideProps } from 'next';
-import { getPage } from "./api/pages";
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { getPage } from "../api/pages";
+import Router from 'next/router';
 import Error from "next/error";
-import Head from "next/head";
-import WebPage from "@/app/_components/templates/WebPage";
-import ContentPage from '@/app/_components/layouts/ContentPage';
-import PageProps from '@/interfaces/page';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-
-interface PageWebProps {
-  page: PageProps | null;
-  error: string | null;
-}
+import PageWebProps from '@/interfaces/page';
+import ContentPageItems from '@/components/layout/ContentPageItems';
+import Layout from '@/components/layout/Layout';
+import HeadSeo from '@/components/seo/HeadSeo';
 
 const PageWeb: React.FC<PageWebProps> = ({ page, error }) => {
-  const router = useRouter();
   
-  useEffect(() => {
-    if (page?.attributes.homepage) {
-      router.push('/');
-    }
-  }, [page, router]);
-  
-  if (error) {
-    return <Error statusCode={500} />;
+  if (error || !page) {
+    console.error(error || "Page non trouvée");
+    return <Error statusCode={error ? 500 : 404} />;
   }
 
-  if (!page) {
-    return <Error statusCode={404} />;
-  }
-
-  const isHomepage = page.attributes.homepage;
-
+  const isHomepage = page.homepage;
   if (isHomepage) {
-    console.log("Homepage");
-    router.push('/');
+    Router.push('/')
   }
-
-  const blocks = page.attributes.content_page;
 
   return (
-    <ContentPage>
-      <Head>
-        <title>{page.attributes.meta_title}</title>
-        <meta name="description" content={page.attributes.meta_desc} />
-      </Head>
-      <WebPage blocks={blocks} />
-    </ContentPage>
+    <>
+      <HeadSeo content={page.seo} type={'website'}></HeadSeo>
+      <Layout noIntro={page.secondary_page}>
+        <ContentPageItems blocks={page.content_page} />
+      </Layout>
+    </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = ["qui-sommes-nous", "contact", "mentions-legales"]; // Ajoute ce que tu veux
+
+  const paths = slugs.map((slug) => ({
+    params: { slug },
+  }));
+
+  return {
+    paths,
+    fallback: 'blocking', // ou false
+  };
+};
+
+
+export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params!;
+  
   try {
     const response = await getPage(slug);
-    if (response) {
-      return { props: { page: response.data[0], error: null } };
-    } else {
+    
+    if (!response) {
       return { notFound: true }
-    }    
+    }
+
+    return { 
+      props: { page: response, error: null }, 
+      revalidate: 60
+    };
   } catch (error) {
+    console.error("Erreur lors du chargement de la page:", error);
     return { props: { page: null, error: "Erreur lors du chargement de la page" + error } };
   }
 };
