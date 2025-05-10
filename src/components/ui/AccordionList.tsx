@@ -1,22 +1,25 @@
 import { Accordion, AccordionItem, SelectionMode } from "@heroui/react";
+import React from "react";
 
 export interface AccordionListProps {
-  items: unknown[];
+  items: string[];
+  multiple: SelectionMode
 }
 
-export default function AccordionList(
-    { items }: AccordionListProps, 
-    multiple: SelectionMode = 'none'
-) {
+const AccordionList: React.FC<AccordionListProps> = ({ items, multiple = 'none' }) => {
   return (
     <Accordion selectionMode={ multiple }>
-      {items.map((item: unknown, index: number) => (
+      {items.map((item: string, index: number) => (
         <AccordionItem 
             key={index} 
             aria-label="" 
             title=""
-            subtitle=""></AccordionItem>
+            subtitle="">
+              {item}
+        </AccordionItem>
       ))}
     </Accordion>
-  );
+  )
 }
+
+export default AccordionList
