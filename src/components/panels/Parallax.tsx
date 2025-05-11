@@ -5,7 +5,7 @@ import { ParallaxProps } from "@/interfaces/blocks";
 
 const Parallax: React.FC<ParallaxProps> = ({ image, speed }) => {
     
-    new Ukiyo('.parallax_img', {
+    new Ukiyo('.parallax_image', {
         speed: speed
     });
 
