@@ -1,4 +1,3 @@
-import Layout from "@/components/layout/Layout"
 import Heroscreen from "@/components/panels/Heroscreen"
 import Parallax from "@/components/panels/Parallax"
 import ButtonLink from "@/components/ui/ButtonLink"
@@ -16,7 +15,7 @@ interface RoomPageProps {
 
 const RoomPage: React.FC<RoomPageProps> = ({ heroscreen, title, desc, price, link, details, parallax }) => {
     return(
-        <Layout noIntro={false}>
+        <>
             <Heroscreen images={heroscreen} />
 
             <section className="room">
@@ -39,7 +38,7 @@ const RoomPage: React.FC<RoomPageProps> = ({ heroscreen, title, desc, price, lin
             <section>
                 <Parallax image={parallax} speed={0}></Parallax>
             </section>
-        </Layout>
+        </>
     )
 }
 

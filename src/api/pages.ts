@@ -1,48 +1,26 @@
-import axios from "axios";
-
-const token = process.env.NEXT_PUBLIC_API_TOKEN;
-const baseUrl = process.env.NEXT_PUBLIC_API_URL;
-
-if (!token) {
-  	throw new Error("API TOKEN is missing");
+export async function getHomePage() {
+  	return initPage('/home', `La Homepage n'a pas pu être trouvée`);
 }
 
-if (!baseUrl) {
-  	throw new Error("API URL is missing");
+export async function getPage(slug: string) {
+	return initPage(`/slug/${slug}`, `La page n'a pas pu être trouvée`);
 }
 
-const api = axios.create({
-	baseURL: `${baseUrl}/api/pages`,
-	headers: {
-		Authorization: `Bearer ${token}`,
-	},
-});
+async function initPage(slug: string, errorMessage: string) {
+	const token = process.env.NEXT_PUBLIC_API_TOKEN;
+	const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+	
+	if (!token || !baseUrl) throw new Error("API Credentials are missings");
 
-const handleError = (error: unknown, context = 'request') => {
-	console.error(`Error during ${context}:`, error);
-	throw new Error(`Failed to ${context}: ${error instanceof Error ? error.message : 'Unknown error'}`);
-};
+	const res = await fetch(`${baseUrl}/api/pages/${slug}`, {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+		next: { revalidate: 60 },
+	});
 
-export async function getHomePage(): Promise<unknown> {
-  	return initPage({ mainPage: true });
-}
+	if (!res.ok) throw new Error(errorMessage)
 
-export async function getPage(slug: string | string[] | null = null): Promise<unknown> {
-  	return initPage({ slug });
-}
-
-async function initPage({ mainPage = false, slug = null }: { mainPage?: boolean; slug?: string | string[] | null }): Promise<unknown> {
-	try {
-		const formattedSlug = Array.isArray(slug) ? slug[0] : slug;
-
-		const query = mainPage
-			? "/home"
-			: `/slug/${formattedSlug}`;
-
-		const { data } = await api.get(query);
-		
-		return data;
-	} catch (error) {
-		handleError(error, mainPage ? 'fetch homepage' : 'fetch page');
-	}
+	const json = await res.json()
+	return json;
 }

@@ -1,15 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  // config.js ou .env.local
-
-  // Locales
-  i18n: {
-    locales: ['default', 'fr', 'en'],
-    defaultLocale: "default"
-  },
+  reactStrictMode: true,
+  swcMinify: true,
   trailingSlash: true,
+
+  experimental: {
+    appDir: true, // ← Ajout ici pour être explicite (facultatif si déjà activé par défaut)
+  },
 
   // Images
   images: {
@@ -22,7 +20,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-
+  
+  // Locales
+  i18n: {
+    locales: ['default', 'fr', 'en'],
+    defaultLocale: "fr"
+  }
 };
 
 export default nextConfig;
