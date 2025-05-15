@@ -35,9 +35,5 @@ export default async function HomePage() {
 
     if (!page) notFound();
 
-    return (
-        <>
-            <ContentPageItems />
-        </>
-    );
+    return <ContentPageItems />;
 };

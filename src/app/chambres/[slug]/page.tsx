@@ -35,9 +35,7 @@ const RoomPage: React.FC<RoomPageProps> = ({ heroscreen, title, desc, price, lin
                 </div>
             </section>
 
-            <section>
-                <Parallax image={parallax} speed={0}></Parallax>
-            </section>
+            <Parallax image={parallax} speed={0}></Parallax>
         </>
     )
 }

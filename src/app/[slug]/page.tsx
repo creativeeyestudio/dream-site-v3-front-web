@@ -38,9 +38,5 @@ export default async function WebPage({ params }: { params: Params }) {
 
     if (page.homepage) redirect('/');
 
-    return (
-        <>
-            <ContentPageItems />
-        </>
-    );
+    return <ContentPageItems />;
 };
