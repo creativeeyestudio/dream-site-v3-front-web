@@ -1,37 +1,18 @@
 import { getHomePage } from "@/api/pages";
 import { notFound } from "next/navigation";
-import PageWebProps from "@/interfaces/page";
+import { PageProps } from "@/interfaces/page";
 import ContentPageItems from "@/components/layout/ContentPageItems";
 
-export async function generateMetadata() {
-    const page = await getHomePage();
-  
-    return page ? {
-        title: page.seo?.metaTitle ?? page.title,
-        description: page.seo?.metaDescription,
-        openGraph: {
-            title: page.seo?.metaTitle,
-            description: page.seo?.metaDescription,
-            images: [
-                {
-                    url: page.seo?.shareImage?.url,
-                },
-            ],
-        },
-    } : {};
-}
-
 export default async function HomePage() {
-    let page: PageWebProps['page'] | null = null;
-
     try {
-        page = await getHomePage();
+        const page: PageProps = await getHomePage();
+        
+        return page && Array.isArray(page.content_page)
+            ? <ContentPageItems blocks={page.content_page} /> 
+            : notFound();
+
     } catch (error) {
         console.error("Erreur lors du chargement de la homepage :", error);
-        notFound();
+        return notFound();
     }
-
-    if (!page) notFound();
-
-    return <ContentPageItems blocks={page.content_page} />;
 };
