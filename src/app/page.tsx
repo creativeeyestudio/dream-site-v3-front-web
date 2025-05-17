@@ -6,9 +6,7 @@ import ContentPageItems from "@/components/layout/ContentPageItems";
 export async function generateMetadata() {
     const page = await getHomePage();
   
-    if (!page) return {};
-
-    return {
+    return page ? {
         title: page.seo?.metaTitle ?? page.title,
         description: page.seo?.metaDescription,
         openGraph: {
@@ -20,7 +18,7 @@ export async function generateMetadata() {
                 },
             ],
         },
-    };
+    } : {};
 }
 
 export default async function HomePage() {
@@ -35,5 +33,5 @@ export default async function HomePage() {
 
     if (!page) notFound();
 
-    return <ContentPageItems />;
+    return <ContentPageItems blocks={page.content_page} />;
 };
