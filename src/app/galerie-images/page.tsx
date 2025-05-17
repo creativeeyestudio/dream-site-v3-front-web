@@ -8,7 +8,7 @@ interface GalleryImagesProps {
 const GalleryImages: React.FC<GalleryImagesProps> = ({ images }) => {
     return (
         <section>
-            <h1>Galerie d'image</h1>
+            <h1>Galerie d&apos;image</h1>
             <Gallery images={images} />
         </section>
     )

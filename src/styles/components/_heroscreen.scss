@@ -1,7 +1,7 @@
 .heroscreen {
-    @extend .h-screen;
+    @apply h-screen;
 
     &__container {
-        @extend .relative;
+        @apply relative;
     }
 }

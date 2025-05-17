@@ -14,9 +14,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Params }) {
     const page = await getPage(params.slug);
   
-    if (!page) return {};
-
-    return {
+    return page ? {
         title: page.seo?.metaTitle ?? page.title,
         description: page.seo?.metaDescription,
         openGraph: {
@@ -28,15 +26,15 @@ export async function generateMetadata({ params }: { params: Params }) {
                 },
             ],
         },
-    };
+    } : {};
 }
 
 export default async function WebPage({ params }: { params: Params }) {
     const page: PageWebProps['page'] = await getPage(params.slug);
 
     if (!page) notFound();
-
+    
     if (page.homepage) redirect('/');
 
-    return <ContentPageItems />;
+    return <ContentPageItems blocks={page.content_page} />;
 };

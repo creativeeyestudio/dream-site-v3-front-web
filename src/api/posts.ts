@@ -3,13 +3,11 @@ import axios from "axios";
 const token = process.env.NEXT_PUBLIC_API_TOKEN;
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-if (!token) {
-  throw new Error('API TOKEN is missing')
-}
-
-if (!baseUrl) {
-  throw new Error("API URL is missing");
-}
+if (!token || !baseUrl) {
+  console.error(`Token : ${token}`);
+  console.error(`Base URL : ${baseUrl}`);
+  throw new Error("API Credentials are missings")
+};
 
 const api = axios.create({
   baseURL: `${baseUrl}/api`,
@@ -33,9 +31,7 @@ export async function getAllPosts(): Promise<unknown> {
 }
 
 export async function getSinglePost(slug: string | string[] | undefined): Promise<unknown> {
-  if (!slug || (Array.isArray(slug) && slug.length === 0)) {
-    throw new Error('Slug is required');
-  }
+  if (!slug || (Array.isArray(slug) && slug.length === 0)) throw new Error('Slug is required');
 
   const formattedSlug = Array.isArray(slug) ? slug[0] : slug;
 

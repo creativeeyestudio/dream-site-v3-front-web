@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 interface NavigationProps {
     menuId: string
     images: boolean
+    classes: string | undefined
 }
 
 function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
@@ -30,7 +31,7 @@ function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
     return roots;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ menuId, images }) => {
+const Navigation: React.FC<NavigationProps> = ({ menuId, images, classes = undefined }) => {
     const [menuItems, setMenusItems] = useState<MenuItem[]>([]);
 
     useEffect(() => {
@@ -74,9 +75,9 @@ const Navigation: React.FC<NavigationProps> = ({ menuId, images }) => {
     );
   
     return images 
-        ? <nav>{renderMenu(menuItems)}</nav> 
+        ? <nav className={classes}>{renderMenu(menuItems)}</nav> 
         : <>
-            <nav>{renderMenu(menuItems)}</nav>
+            <nav className={classes}>{renderMenu(menuItems)}</nav>
             <div className='nav-images'></div>
         </>;
 };

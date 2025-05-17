@@ -6,7 +6,7 @@ interface RootLayoutProps {
     children: ReactNode
 }
 
-const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
+const RoomsLayout: React.FC<RootLayoutProps> = ({ children }) => {
     return(
         <html lang='fr'>
             <body>
@@ -18,4 +18,4 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     )
 }
 
-export default RootLayout;
+export default RoomsLayout;

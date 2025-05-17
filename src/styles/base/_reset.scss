@@ -1,3 +1,7 @@
 * {
-    box-sizing: border-box;
+    @apply box-sizing;
+}
+
+body {
+    @apply m-0;
 }
