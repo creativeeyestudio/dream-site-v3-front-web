@@ -10,10 +10,10 @@ export type BlockProps =
   | GalleryProps
   | HTMLContentProps
 
-interface PageProps {
+export interface PageProps {
   id: number
   title: string
-  slug: string
+  url: string
   homepage: boolean
   secondary_page: boolean
   createdAt: Date

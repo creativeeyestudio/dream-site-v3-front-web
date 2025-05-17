@@ -1,3 +1,5 @@
+'use client'
+
 import { MenuItem } from '@/interfaces/menu';
 import getMenu from '@/api/menus';
 import React, { useEffect, useState } from 'react';
@@ -61,7 +63,7 @@ const Navigation: React.FC<NavigationProps> = ({ menuId, images, classes = undef
                     ) : (
                     <>
                         {item.type === "INTERNAL" ? (
-                           <a href={`/${item.related?.page.slug || ""}`}>{item.title}</a>
+                           <a href={`/${item.related?.page.url || ""}`}>{item.title}</a>
                         ) : (
                             <a href={item.externalPath || "#"} target="_blank" rel="noopener noreferrer">
                                 {item.title}

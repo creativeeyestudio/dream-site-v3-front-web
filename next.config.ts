@@ -2,12 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   trailingSlash: true,
-
-  experimental: {
-    appDir: true, // ← Ajout ici pour être explicite (facultatif si déjà activé par défaut)
-  },
 
   // Images
   images: {

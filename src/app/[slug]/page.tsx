@@ -1,40 +1,45 @@
 import { getPage } from "@/api/pages";
 import { notFound, redirect } from "next/navigation";
-import PageWebProps from "@/interfaces/page";
 import ContentPageItems from "@/components/layout/ContentPageItems";
+import { Metadata } from "next";
+import { PageProps } from "@/interfaces/page";
 
-type Params = { slug: string };
+export default async function WebPage(
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const { slug } = await params;
+  const data: PageProps = await getPage(slug);
+
+  if (!data) return notFound();
+
+  if (data.homepage) return redirect("/");
+
+  return <ContentPageItems blocks={data.content_page} />;
+}
+
+export async function generateMetadata(
+    { params }: { params: Promise<{ slug: string }> }
+): Promise<Metadata> {
+	const { slug } = await params;
+	const data: PageProps = await getPage(slug);
+	const page = data;
+
+	return page ? {
+		title: page.seo?.meta_title ?? page.title,
+		description: page.seo?.meta_desc,
+		openGraph: {
+		title: page.seo?.meta_title,
+		description: page.seo?.meta_title,
+		images: [
+			{
+			url: page.seo?.social_image?.url || '',
+			},
+		],
+		},
+	} : {};
+}
 
 export async function generateStaticParams() {
-  const slugs = ["qui-sommes-nous", "contact", "mentions-legales"];
-  
-  return slugs.map((slug) => ({ slug }));
+	const slugs = ["qui-sommes-nous", "contact", "mentions-legales"];
+	return slugs.map((slug) => ({ slug }));
 }
-
-export async function generateMetadata({ params }: { params: Params }) {
-    const page = await getPage(params.slug);
-  
-    return page ? {
-        title: page.seo?.metaTitle ?? page.title,
-        description: page.seo?.metaDescription,
-        openGraph: {
-            title: page.seo?.metaTitle,
-            description: page.seo?.metaDescription,
-            images: [
-                {
-                    url: page.seo?.shareImage?.url,
-                },
-            ],
-        },
-    } : {};
-}
-
-export default async function WebPage({ params }: { params: Params }) {
-    const page: PageWebProps['page'] = await getPage(params.slug);
-
-    if (!page) notFound();
-    
-    if (page.homepage) redirect('/');
-
-    return <ContentPageItems blocks={page.content_page} />;
-};
