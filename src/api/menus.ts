@@ -3,12 +3,10 @@ import axios from "axios";
 const token = process.env.NEXT_PUBLIC_API_TOKEN;
 const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-if (!token) {
-  throw new Error("API token is missing");
-}
-
-if (!baseUrl) {
-  throw new Error("API URL is missing");
+if (!token || !baseUrl) {
+    console.error(`Token : ${token}`);
+    console.error(`Base URL : ${baseUrl}`);
+    throw new Error("API token is missing");
 }
 
 const api = axios.create({

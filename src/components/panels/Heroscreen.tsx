@@ -23,29 +23,27 @@ const Heroscreen: React.FC<HeroscreenProps> = (content: HeroscreenProps) => {
           disableOnInteraction: false,
         }}
         modules={[EffectFade, Pagination, Autoplay]}
-        className="h-screen"
+        className="heroscreen"
       >
         {content.images.map((image, index) => (
-          <SwiperSlide key={index} className="relative">
+          <SwiperSlide key={index} className="heroscreen__container">
             <Image
               src={process.env.NEXT_PUBLIC_API_URL + image.url}
               alt={image.alternativeText ?? "Pas de text alt"}
               fill={true}
               objectFit="cover"
-              priority={true}
-              className="hero_img" />
+              priority={true} />
           </SwiperSlide>
         ))}    
       </Swiper>
     ) : (
-      <div className="relative">
+      <div className="heroscreen__container">
         <Image
             src={process.env.NEXT_PUBLIC_API_URL + content.images[0].url}
             alt={content.images[0].alternativeText ?? "Pas de text alt"}
             fill={true}
             objectFit="cover"
-            priority={true}
-            className="hero_img" />
+            priority={true} />
       </div>
     );
 };

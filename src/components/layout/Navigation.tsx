@@ -1,3 +1,5 @@
+'use client'
+
 import { MenuItem } from '@/interfaces/menu';
 import getMenu from '@/api/menus';
 import React, { useEffect, useState } from 'react';
@@ -5,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 interface NavigationProps {
     menuId: string
     images: boolean
+    classes: string | undefined
 }
 
 function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
@@ -30,7 +33,7 @@ function buildMenuTree(menuItems: MenuItem[]): MenuItem[] {
     return roots;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ menuId, images }) => {
+const Navigation: React.FC<NavigationProps> = ({ menuId, images, classes = undefined }) => {
     const [menuItems, setMenusItems] = useState<MenuItem[]>([]);
 
     useEffect(() => {
@@ -60,7 +63,7 @@ const Navigation: React.FC<NavigationProps> = ({ menuId, images }) => {
                     ) : (
                     <>
                         {item.type === "INTERNAL" ? (
-                           <a href={`/${item.related?.page.slug || ""}`}>{item.title}</a>
+                           <a href={`/${item.related?.page.url || ""}`}>{item.title}</a>
                         ) : (
                             <a href={item.externalPath || "#"} target="_blank" rel="noopener noreferrer">
                                 {item.title}
@@ -74,9 +77,9 @@ const Navigation: React.FC<NavigationProps> = ({ menuId, images }) => {
     );
   
     return images 
-        ? <nav>{renderMenu(menuItems)}</nav> 
+        ? <nav className={classes}>{renderMenu(menuItems)}</nav> 
         : <>
-            <nav>{renderMenu(menuItems)}</nav>
+            <nav className={classes}>{renderMenu(menuItems)}</nav>
             <div className='nav-images'></div>
         </>;
 };

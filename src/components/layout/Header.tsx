@@ -1,16 +1,12 @@
 import React from 'react';
 import Navigation from './Navigation';
 
-interface HeaderProps {
-    noIntro: boolean
-}
-
-const Header: React.FC<HeaderProps> = ({ noIntro }) => {
+const Header: React.FC = () => {
     return(
         <>
-            <header className={noIntro ? 'no-intro' : ''}></header>
+            <header></header>
             <div className="nav--primary">
-                <Navigation menuId={'main-navigation'} images={true} />
+                <Navigation menuId={'main-navigation'} images={true} classes={undefined} />
             </div>
         </>
     );

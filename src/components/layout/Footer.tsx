@@ -1,8 +1,11 @@
 import React from 'react';
+import Navigation from './Navigation';
 
 const Footer: React.FC = () => {
     return(
-        <footer></footer>
+        <footer>
+            <Navigation menuId={'footer-navigation'} images={false} classes={undefined} />
+        </footer>
     );
 }
 

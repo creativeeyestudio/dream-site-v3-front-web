@@ -1,11 +1,12 @@
 import { Button, Modal, ModalContent, ModalBody, useDisclosure } from "@heroui/react";
 
-export default function ModalBlock(
+interface ModalBlockProps {
     btnLabel: string,
-    size: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "full" | undefined = '5xl'
-) {
-    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    size: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "full" | undefined
+}
 
+const ModalBlock: React.FC<ModalBlockProps> = ({ btnLabel, size = '5xl' }) => {
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
     return(
         <>
             <Button onPress={onOpen}>{btnLabel}</Button>
@@ -17,3 +18,5 @@ export default function ModalBlock(
         </>
     )
 }
+
+export default ModalBlock;

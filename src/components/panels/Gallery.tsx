@@ -1,23 +1,20 @@
 import { GalleryProps } from '@/interfaces/blocks';
 import Image from 'next/image';
 
-const thumbSize: number = 100;
-
 const Gallery: React.FC<GalleryProps> = ({ images }) => {
     return(
-        <>
+        <div className="gallery">
             {images.map((image, index: number) => (
-                <figure key={index}>
+                <figure key={index} className="gallery_thumb">
                     <Image 
                         src={process.env.NEXT_PUBLIC_API_TOKEN + image.url} 
                         alt={image.alternativeText ?? `Galerie Image ${index + 1}`}
-                        width={thumbSize}
-                        height={thumbSize}
+                        fill={true}
                         style={{objectFit: 'cover', objectPosition: 'center'}}
                     />
                 </figure>
             ))}
-        </>
+        </div>
     )
 }
 
