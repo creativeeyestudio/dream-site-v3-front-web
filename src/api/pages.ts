@@ -1,9 +1,9 @@
 export async function getHomePage() {
-  	return initPage('/home');
+  	return initPage('home');
 }
 
 export async function getPage(slug: string) {
-	return initPage(`/slug/${slug}`);
+	return initPage(`slug/${slug}`);
 }
 
 async function initPage(slug: string) {
@@ -23,8 +23,8 @@ async function initPage(slug: string) {
 		next: { revalidate: 60 },
 	});
 
-	if (!res.ok) throw new Error(`La page n'a pas pu être trouvée`)
+	if (!res.ok) throw new Error(`La page n'a pas pu être trouvée`);
 
-	const json = await res.json()
+	const json = await res.json();
 	return json;
 }
