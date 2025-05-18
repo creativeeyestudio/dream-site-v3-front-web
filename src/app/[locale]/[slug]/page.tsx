@@ -3,9 +3,16 @@ import ContentPageItems from "@/components/layout/ContentPageItems";
 import { PageProps } from "@/interfaces/page";
 import { notFound, redirect } from "next/navigation";
 
-export default async function WebPage({ params }: { params: { slug: string } }) {
-	const { slug } = await params;
-	const page: PageProps = await getPage(slug);
+type Props = {
+    params: {
+        locale: string
+		slug: string
+    }
+}
+
+export default async function WebPage({ params }: Props) {
+	const { slug, locale } = await params;
+	const page: PageProps = await getPage(locale, slug);
 
 	if (!page) notFound();
 	
