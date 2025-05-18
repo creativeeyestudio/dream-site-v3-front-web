@@ -4,20 +4,12 @@ import { ReactNode } from "react";
 
 interface RootLayoutProps {
     children: ReactNode,
-    params: { lang: 'fr' | 'fr-FR' | 'en' }
+    params: { locale: 'string' }
 }
-
-export async function generateStaticParams() {
-    return [
-        {lang: 'fr'},
-        {lang: 'fr-FR'},
-        {lang: 'en'},
-    ]
-} 
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
     return (
-        <html lang={params.lang}>
+        <html lang='fr'>
         <body>
             <Header />
             <main>{children}</main>

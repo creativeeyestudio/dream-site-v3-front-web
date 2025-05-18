@@ -1,9 +1,9 @@
 export async function getHomePage() {
-  	return initPage('home');
+  	return initPage('[homepage][$eq]=true');
 }
 
 export async function getPage(slug: string) {
-	return initPage(`slug/${slug}`);
+	return initPage(`[slug][$eq]=${slug}`);
 }
 
 async function initPage(slug: string) {
@@ -16,15 +16,16 @@ async function initPage(slug: string) {
 		throw new Error("API Credentials are missings")
 	};
 
-	const res = await fetch(`${baseUrl}/api/pages/${slug}`, {
+	const res = await fetch(`${baseUrl}/api/pages?pLevel&filters${slug}`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
 		next: { revalidate: 60 },
 	});
 
-	if (!res.ok) throw new Error(`La page n'a pas pu être trouvée`);
+
+	if (!res.ok) throw new Error(`API : La page n'a pas pu être trouvée`);
 
 	const json = await res.json();
-	return json;
+	return json.data[0];
 }

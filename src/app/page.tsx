@@ -6,8 +6,6 @@ import ContentPageItems from "@/components/layout/ContentPageItems";
 export default async function HomePage() {
     try {
         const page: PageProps = await getHomePage();
-
-        console.log(page);
         
         return page
             ? <ContentPageItems blocks={page.content_page} /> 
