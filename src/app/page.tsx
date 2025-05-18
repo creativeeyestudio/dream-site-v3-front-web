@@ -1,18 +1,13 @@
-import { getHomePage } from "@/api/pages";
-import { notFound } from "next/navigation";
-import { PageProps } from "@/interfaces/page";
-import ContentPageItems from "@/components/layout/ContentPageItems";
+import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 
-export default async function HomePage() {
-    try {
-        const page: PageProps = await getHomePage();
-        
-        return page
-            ? <ContentPageItems blocks={page.content_page} /> 
-            : notFound();
+export default function Home() {
+  const headersList = headers();
+  const acceptLanguage = headersList.get('accept-language');
 
-    } catch (error) {
-        console.error("Erreur lors du chargement de la homepage :", error);
-        return notFound();
-    }
-};
+  const preferredLang = acceptLanguage?.split(',')[0].toLowerCase() || 'en';
+
+  const locale = preferredLang.startsWith('fr') ? 'fr' : 'en';
+
+  redirect(`/${locale}`);
+}

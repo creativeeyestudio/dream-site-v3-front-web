@@ -4,7 +4,7 @@ import { PageProps } from "@/interfaces/page";
 import { notFound, redirect } from "next/navigation";
 
 export default async function WebPage({ params }: { params: { slug: string } }) {
-	const { slug } = params;
+	const { slug } = await params;
 	const page: PageProps = await getPage(slug);
 
 	if (!page) notFound();

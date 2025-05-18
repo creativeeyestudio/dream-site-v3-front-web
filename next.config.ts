@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  trailingSlash: true,
 
   // Images
   images: {
@@ -14,14 +15,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  
-  // Locales
-  i18n: {
-    locales: ['default', 'fr', 'en'],
-    defaultLocale: 'default',
-    localeDetection: false,
-  },
-  trailingSlash: true,
 };
 
 export default nextConfig;
