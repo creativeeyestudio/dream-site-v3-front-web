@@ -3,6 +3,9 @@
 import { createI18nClient } from 'next-international/client'
  
 export const { useI18n, useScopedI18n, I18nProviderClient } = createI18nClient({
+  fr: () => import('./fr'),
   en: () => import('./en'),
-  fr: () => import('./fr')
+  es: () => import('./es'),
+  it: () => import('./it'),
+  de: () => import('./de'), 
 })

@@ -1,4 +1,4 @@
-// locales/fr.ts
+// locales/es.ts
 export default {
   'hello': 'Hello',
   'hello.world': 'Hello world!',
