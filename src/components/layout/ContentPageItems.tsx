@@ -34,11 +34,11 @@ const ContentPageItems: React.FC<ContentPageItemsProps> = ({ blocks }) => {
 					case "page.parallax":
 						return <Parallax image={block.image} speed={block.speed} key={index} />
 					case "page.heroscreen":
-						return <Heroscreen images={block.images} key={index}></Heroscreen>
+						return <Heroscreen images={block.images} key={index} />
 					case "common.gallery":
-						return <Gallery images={block.images} key={index}></Gallery>
+						return <Gallery images={block.images} key={index} />
 					case "common.html_content":
-						return <HtmlContent content={block.content} key={index}></HtmlContent>
+						return <HtmlContent content={block.content} key={index} />
 					default:
 						return null;
 				}
