@@ -1,7 +1,7 @@
 export interface ImageDataProps {
   alternativeText: string;
   mime: string;
-  url: string;
+  url: string | URL;
   width: number;
   height: number;
   formats: {
