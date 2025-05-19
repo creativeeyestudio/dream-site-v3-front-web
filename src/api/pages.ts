@@ -1,12 +1,12 @@
-export async function getHomePage() {
-  	return initPage('/home');
+export async function getHomePage(locale: string) {
+  	return initPage(locale, '[homepage][$eq]=true');
 }
 
-export async function getPage(slug: string) {
-	return initPage(`/slug/${slug}`);
+export async function getPage(locale: string, slug: string) {
+	return initPage(locale, `[slug][$eq]=${slug}`);
 }
 
-async function initPage(slug: string) {
+async function initPage(locale: string, slug: string) {
 	const token = process.env.NEXT_PUBLIC_API_TOKEN;
 	const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 	
@@ -16,15 +16,15 @@ async function initPage(slug: string) {
 		throw new Error("API Credentials are missings")
 	};
 
-	const res = await fetch(`${baseUrl}/api/pages/${slug}`, {
+	const res = await fetch(`${baseUrl}/api/pages?pLevel&locale=${locale}&filters${slug}`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
 		next: { revalidate: 60 },
 	});
 
-	if (!res.ok) throw new Error(`La page n'a pas pu être trouvée`)
+	if (!res.ok) throw new Error(`API : La page n'a pas pu être trouvée`);
 
-	const json = await res.json()
-	return json;
+	const json = await res.json();
+	return json.data[0];
 }

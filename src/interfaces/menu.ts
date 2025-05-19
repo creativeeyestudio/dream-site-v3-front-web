@@ -1,4 +1,4 @@
-import PageProps from "./page"
+import PageContentProps from "./page"
 
 export interface MenuItem {
     id: number
@@ -7,7 +7,7 @@ export interface MenuItem {
     path: string
     externalPath: string
     order: number
-    related: PageProps
+    related: PageContentProps
     parent: MenuItem
     items?: MenuItem[]
 }

@@ -1,12 +1,12 @@
 import { ImageDataProps } from "./image";
-import PageProps from "./page";
+import PageContentProps from "./page";
 import PostProps from "./post";
 
 
 // CONTENT
 // --------------------------------
 export interface LinkProps {
-    page?: PageProps
+    page?: PageContentProps
     post?: PostProps
     external_link?: string
     medias?: ImageDataProps[]
