@@ -7,15 +7,6 @@ if (!token || !baseUrl) {
     throw new Error("API token is missing");
 }
 
-// const getMenu = async (menuId: string): Promise<unknown> => {
-//     try {
-//         const { data } = await api.get(`/navigation/render/${menuId}?type=TREE`);
-//         return data;
-//     } catch (error) {
-//         handleError(error, `fetch menu "${menuId}"`);
-//     }
-// };
-
 async function getMenu(menuId: string) {
     const res = await fetch(`${baseUrl}/api/navigation/render/${menuId}?type=TREE`, {
         headers: {

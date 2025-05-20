@@ -17,8 +17,6 @@ const Navigation = async ({ menuId }: NavigationProps) => {
     
     const menu = await getMenu(menuId);
 
-    console.log(menu);
-
     const renderLink = (item: MenuItem) => {
         const isExternal = item.additionalFields.external;
         const isExternalType = item.type === 'EXTERNAL';
@@ -38,21 +36,28 @@ const Navigation = async ({ menuId }: NavigationProps) => {
     };
 
     
-    return (
-        <ul>
-        {menu.map((item: MenuItem) => (
-            <li key={item.id}>
-            {renderLink(item)}
+return (
+  <ul>
+    {menu.map((item: MenuItem) => {
+        const hasChildren = item.items && item.items.length > 0;
 
-            {item.items && item.items.length > 0 && (
-                <ul>
-                {item.items.map((subItem: MenuItem) => <li key={subItem.id}>{renderLink(subItem)}</li>)}
-                </ul>
-            )}
+        return (
+            <li key={item.id}>
+                {renderLink(item)}
+
+                {hasChildren && (
+                    <ul>
+                    {item.items!.map((subItem) => (
+                        <li key={subItem.id}>{renderLink(subItem)}</li>
+                    ))}
+                    </ul>
+                )}
             </li>
-        ))}
-        </ul>
-    );
+        );
+    })}
+  </ul>
+);
+
 };
   
 export default Navigation;
