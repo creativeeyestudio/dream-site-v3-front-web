@@ -32,7 +32,7 @@ export async function generateMetadata(props: { params : PageHomeParams}): Promi
 	}
 
 	return {
-		title: `→ ${page.seo?.meta_title ?? page.title}`,
+		title: `≻ ${page.seo?.meta_title ?? page.title}`,
 		description: page.seo?.meta_desc ?? "",
 		generator: "Dreamsite V3",
 		authors: [{ name: "Kévin RIFA", url: 'https://creative-eye.fr'}],
