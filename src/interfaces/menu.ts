@@ -8,6 +8,8 @@ export interface MenuItem {
     externalPath: string
     order: number
     related: PageContentProps
-    parent: MenuItem
     items?: MenuItem[]
+    additionalFields: {
+        external: boolean
+    }
 }

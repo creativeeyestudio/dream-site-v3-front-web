@@ -14,13 +14,9 @@ export default async function WebPage(props: { params : PageParams}) {
 	const params = await props.params
 	const page: PageContentProps | null = await getPage(params.locale, params.slug);
 
-	if (!page) {
-		notFound();
-	}
+	if (!page) notFound();
 
-	if (page.homepage) {
-		redirect(`/${params.locale}`);
-	}
+	if (page.homepage) redirect(`/${params.locale}`);
 
 	return <ContentPageItems blocks={page.content_page} />;
 }
@@ -39,7 +35,7 @@ export async function generateMetadata(props: { params : PageParams}): Promise<M
 
 	return {
 		title: `${page.seo?.meta_title ?? page.title} | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
-		description: page.seo?.meta_desc ?? "",
+		description: page.seo?.meta_desc ?? '',
 		generator: "Dreamsite V3",
 		authors: [{ name: "Kévin RIFA", url: 'https://creative-eye.fr'}],
 		openGraph: {
@@ -47,7 +43,7 @@ export async function generateMetadata(props: { params : PageParams}): Promise<M
 			description: page.seo?.og_desc,
 			images: [
 				{
-					url: page.seo?.social_image?.url || "",
+					url: page.seo?.social_image?.url || '',
 					width: page.seo?.social_image?.width,
 					height: page.seo?.social_image?.height
 				}
