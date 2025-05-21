@@ -12,7 +12,7 @@ interface NavigationProps {
 
 const Navigation = async ({ menuId, locale }: NavigationProps) => {
     
-    const menu = await getMenu(menuId);
+    const menu = await getMenu(menuId, locale);
 
     const renderLink = (item: MenuItem) => {
         const isExternal = item.additionalFields.external;
