@@ -6,7 +6,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, 
 	const TitleTag = first_block ? 'h1' : 'h2';
 
 	return (
-		<section className="text-double-img">
+		process.env.NEXT_PUBLIC_API_URL != undefined ? <section className="text-double-img">
 			<div className="text-double-img__content">
 				<TitleTag className="text-double-img__title">{ title }</TitleTag>
 				<div className="text-double-img__text" dangerouslySetInnerHTML={{ __html: text }}></div>
@@ -17,7 +17,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, 
 					src={process.env.NEXT_PUBLIC_API_URL + image1.url}
 					width={image1.width}
 					height={image1.height}
-					alt={image1.alternativeText}
+					alt={image1.alternativeText ?? ""}
 				/>
 			</figure>
 
@@ -29,7 +29,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({ title, text, image1, 
 					alt={image2.alternativeText}
 				/>
 			</figure> : <></>}
-		</section>
+		</section> : <></>
 	);
 };
 

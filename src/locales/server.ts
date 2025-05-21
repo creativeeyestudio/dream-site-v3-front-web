@@ -4,7 +4,4 @@ import { createI18nServer } from 'next-international/server'
 export const { getI18n, getScopedI18n, getStaticParams } = createI18nServer({
   fr: () => import('./fr'),
   en: () => import('./en'),
-  es: () => import('./es'),
-  it: () => import('./it'),
-  de: () => import('./de'), 
 })

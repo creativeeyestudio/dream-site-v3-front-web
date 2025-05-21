@@ -1,12 +1,16 @@
 import React from 'react';
 import Navigation from './Navigation';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    locale: string
+}
+
+const Header: React.FC<HeaderProps> = ({ locale }) => {
     return(
         <>
             <header></header>
             <div className="nav--primary">
-                <Navigation menuId={'main-navigation'} images={true} classes={undefined} />
+                <Navigation menuId={'main-navigation'} locale={locale} images={true} classes={undefined} />
             </div>
         </>
     );

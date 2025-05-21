@@ -26,25 +26,26 @@ const Heroscreen: React.FC<HeroscreenProps> = (content: HeroscreenProps) => {
         className="heroscreen"
       >
         {content.images.map((image, index) => (
-          <SwiperSlide key={index} className="heroscreen__container">
+          process.env.NEXT_PUBLIC_API_URL != undefined 
+          ? <SwiperSlide key={index} className="heroscreen__container">
             <Image
               src={process.env.NEXT_PUBLIC_API_URL + image.url}
-              alt={image.alternativeText ?? "Pas de text alt"}
+              alt={image.alternativeText ?? ""}
               fill={true}
               objectFit="cover"
               priority={true} />
-          </SwiperSlide>
+          </SwiperSlide> : <></>
         ))}    
       </Swiper>
     ) : (
-      <div className="heroscreen__container">
+      process.env.NEXT_PUBLIC_API_URL != undefined ? <div className="heroscreen__container">
         <Image
             src={process.env.NEXT_PUBLIC_API_URL + content.images[0].url}
             alt={content.images[0].alternativeText ?? "Pas de text alt"}
             fill={true}
             objectFit="cover"
             priority={true} />
-      </div>
+      </div> : <></>
     );
 };
 

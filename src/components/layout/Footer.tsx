@@ -1,11 +1,12 @@
 import React from 'react';
-import Navigation from './Navigation';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+    locale: string
+}
+
+const Footer: React.FC<FooterProps> = () => {
     return(
-        <footer>
-            {/* <Navigation menuId={'footer-navigation'} images={false} classes={undefined} /> */}
-        </footer>
+        <footer></footer>
     );
 }
 

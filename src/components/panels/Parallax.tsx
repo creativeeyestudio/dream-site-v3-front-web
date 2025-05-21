@@ -10,15 +10,15 @@ const Parallax: React.FC<ParallaxProps> = ({ image, speed }) => {
     });
 
     return(
-        <>
+        process.env.NEXT_PUBLIC_API_URL ? <>
             <figure className="parallax">
                 <Image
                     className="parallax_image"
                     src={process.env.NEXT_PUBLIC_API_URL + image.url}
-                    alt={image.alternativeText}
+                    alt={image.alternativeText ?? ""}
                     fill={true}/>
             </figure>
-        </>
+        </> : <></>
     )
 }
 

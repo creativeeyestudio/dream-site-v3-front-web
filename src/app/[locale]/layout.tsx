@@ -9,9 +9,9 @@ export default async function RootLayout({ children, params }: { children: React
         <html lang={locale}>
             <body>
                 <Providers locale={locale} />
-                <Header />
+                <Header locale={locale} />
                 <main>{children}</main>
-                <Footer />
+                <Footer locale={locale} />
             </body>
         </html>
     );

@@ -5,7 +5,7 @@ const TextImage: React.FC<TextImageProps> = ({ title, text, image, first_block }
 	const TitleTag = first_block ? 'h1' : 'h2';
 
 	return (
-        <section className='text-img'>
+        process.env.NEXT_PUBLIC_API_URL ? <section className='text-img'>
             <div className='text-img__content'>
                 <TitleTag className="text-img__title">{ title }</TitleTag>
                 <div className="text-img__text" dangerouslySetInnerHTML={{ __html: text }}></div>
@@ -18,7 +18,7 @@ const TextImage: React.FC<TextImageProps> = ({ title, text, image, first_block }
                     height={image.height}
                     alt={image.alternativeText ?? ""} />
             </figure>
-        </section>
+        </section> : <></>
     );
 }
 
