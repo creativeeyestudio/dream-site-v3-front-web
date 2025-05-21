@@ -7,8 +7,8 @@ if (!token || !baseUrl) {
     throw new Error("API token is missing");
 }
 
-async function getMenu(menuId: string) {
-    const res = await fetch(`${baseUrl}/api/navigation/render/${menuId}?type=TREE`, {
+async function getMenu(menuId: string, locale: string) {
+    const res = await fetch(`${baseUrl}/api/navigation/render/${menuId}?type=TREE&locale=${locale}`, {
         headers: {
 			Authorization: `Bearer ${token}`,
 		},
