@@ -14,7 +14,7 @@ async function getMenu(menuId: string, locale: string) {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      cache: 'no-store', // important pour Next.js App Router
+      cache: "no-store", // important pour Next.js App Router
     });
 
     if (!res.ok) {

@@ -3,8 +3,8 @@ name: Image Docker Dev
 on:
   push:
     tags:
-      - "v*"       # Déclenche sur tous les tags commençant par "v"
-      - "v*-beta"  # Déclenche sur tous les tags contenant "beta"
+      - "v*" # Déclenche sur tous les tags commençant par "v"
+      - "v*-beta" # Déclenche sur tous les tags contenant "beta"
   workflow_dispatch: # Permet le déclenchement manuel depuis l'interface GitHub
 
 jobs:
@@ -36,6 +36,6 @@ jobs:
         run: |
           docker tag dreamsite-web-front:${{ github.ref_name }} kevinad/dreamsite-web-front:${{ github.ref_name }}
           docker tag dreamsite-web-front:${{ github.ref_name }} kevinad/dreamsite-web-front:latest
-          
+
           docker push kevinad/dreamsite-web-front:${{ github.ref_name }}
           docker push kevinad/dreamsite-web-front:latest

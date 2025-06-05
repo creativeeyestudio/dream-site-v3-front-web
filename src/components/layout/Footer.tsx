@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 
 interface FooterProps {
-    locale: string
+  locale: string;
 }
 
 const Footer: React.FC<FooterProps> = () => {
-    return(
-        <footer></footer>
-    );
-}
+  return <footer></footer>;
+};
 
 export default Footer;
