@@ -1,5 +1,5 @@
 const ToggleLang = () => {
-    return <></>
-}
+  return <></>;
+};
 
-export default ToggleLang
+export default ToggleLang;
