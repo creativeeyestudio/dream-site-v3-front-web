@@ -1,9 +1,7 @@
 import {
-  GalleryProps,
   HeroscreenProps,
   HTMLContentProps,
   ParallaxProps,
-  SeoProps,
   TextDoubleImageProps,
   TextImageProps,
   TextIntroProps,
@@ -17,25 +15,26 @@ export type BlockProps =
   | TextDoubleImageProps
   | ParallaxProps
   | HeroscreenProps
-  | GalleryProps
   | HTMLContentProps;
 
-export interface PageContentProps {
-  id: number;
-  title: string;
-  slug: string;
-  homepage: boolean;
-  secondary_page: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date;
-  documentId: string;
-  content_page: BlockProps[];
-  seo: SeoProps;
-  error: string;
+export interface PageContent {
+  layout: BlockProps[];
 }
 
-export default interface PageWebProps {
-  page: PageContentProps;
-  error: string;
+export interface PageContentProps {
+  readonly createdAt: string | Date;
+  readonly updatedAt: string | Date;
+  readonly title: string;
+  readonly slug: string;
+  readonly content: PageContent;
+  readonly config: {
+    /** 0 = Brouillon, 1 = A relire, 2 = Publié */
+    published: 0 | 1 | 2;
+    homepage: boolean;
+  };
+  readonly meta: {
+    title: string;
+    description: string;
+  };
+  readonly id: string;
 }
