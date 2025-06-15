@@ -13,7 +13,6 @@ const Header: React.FC<HeaderProps> = ({ locale }) => {
         <Navigation
           menuId={"main-navigation"}
           locale={locale}
-          images={true}
           classes={undefined}
         />
       </div>
