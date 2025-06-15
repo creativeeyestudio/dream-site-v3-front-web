@@ -12,25 +12,22 @@ interface NavigationProps {
 const Navigation = async ({ menuId, locale, classes }: NavigationProps) => {
   const menu = await getMenu(menuId, locale);
 
-  if (!menu) return null;
+  if (!menu) {
+    console.error(`Menu non trouvé avec ${menuId}`);
+    return null
+  };
+
+  const getLinkProps = (item: MenuItem) => {
+    const href = item.page ? `/${locale}/${item.page.slug}` : item.url ?? "#";
+    const label = item.page?.title ?? item.label ?? "";
+    return { href, label };
+  }
 
   const renderLink = (item: MenuItem) => {
-    let href: string;
-    let label: string;
-
-    switch(true) {
-      case !!item.page:
-        href = `/${locale}/${item.page?.slug}`;
-        label = item.page?.title ?? ''
-        break;
-      default:
-        href = item.url ?? '';
-        label = item.label ?? ''
-        break;
-    }
+    const { href, label } = getLinkProps(item);
 
     return item.type === 'external' ? (
-      <a href={href} target="_blank" rel="noopener noreferrer" title={label}>
+      <a href={href} target="_blank" rel="noopener noreferrer" title="Nouvel onglet">
         {label}
       </a>
     ) : (
@@ -40,25 +37,18 @@ const Navigation = async ({ menuId, locale, classes }: NavigationProps) => {
     );
   };
 
-  return (
-    <ul className={classes}>
-      {menu.map((item: MenuItem) => {
-        return (
-          <li key={item.id}>
-            {renderLink(item)}
-
-            {item.children?.length > 0 && (
-              <ul>
-                {item.children!.map((subItem) => (
-                  <li key={subItem.id}>{renderLink(subItem)}</li>
-                ))}
-              </ul>
-            )}
-          </li>
-        );
-      })}
+  const renderItems = (items: MenuItem[]) => (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>
+          {renderLink(item)}
+          {item.children?.length ? renderItems(item.children) : null}
+        </li>
+      ))}
     </ul>
   );
+
+  return <nav className={classes}>{renderItems(menu.items)}</nav>;
 };
 
 export default Navigation;
