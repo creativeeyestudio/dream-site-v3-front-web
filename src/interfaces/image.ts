@@ -9,4 +9,5 @@ export interface ImageDataProps {
   id: number;
   url: string;
   thumbnailURL: string | null
+  alt: string | null
 }

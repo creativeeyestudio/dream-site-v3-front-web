@@ -1,6 +1,6 @@
 import { TextProps } from "@/interfaces/blocks";
 
-const Text: React.FC<TextProps> = ({ title, text, first_block }) => {
+const Text: React.FC<TextProps> = ({ title, html, first_block }) => {
   const TitleTag = first_block ? "h1" : "h2";
 
   return (
@@ -8,7 +8,7 @@ const Text: React.FC<TextProps> = ({ title, text, first_block }) => {
       <TitleTag className="text__title">{title}</TitleTag>
       <div
         className="text__text"
-        dangerouslySetInnerHTML={{ __html: text }}
+        dangerouslySetInnerHTML={{ __html: html }}
       ></div>
     </section>
   );
