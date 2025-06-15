@@ -6,47 +6,50 @@ import React from "react";
 interface NavigationProps {
   menuId: string;
   locale: string;
-  images: boolean;
   classes?: string;
 }
 
-const Navigation = async ({ menuId, locale }: NavigationProps) => {
+const Navigation = async ({ menuId, locale, classes }: NavigationProps) => {
   const menu = await getMenu(menuId, locale);
 
   if (!menu) return null;
 
   const renderLink = (item: MenuItem) => {
-    const isExternal = item.additionalFields?.external;
-    const isExternalType = item.type === "EXTERNAL";
-    const href = isExternalType ? item.path : `/${locale}${item.path}`;
-    const target = isExternal ? "_blank" : undefined;
-    const rel = isExternal ? "noopener noreferrer" : undefined;
+    let href: string;
+    let label: string;
 
-    return isExternalType ? (
-      <a href={href} target={target} rel={rel}>
-        {item.title}
+    switch(true) {
+      case !!item.page:
+        href = `/${locale}/${item.page?.slug}`;
+        label = item.page?.title ?? ''
+        break;
+      default:
+        href = item.url ?? '';
+        label = item.label ?? ''
+        break;
+    }
+
+    return item.type === 'external' ? (
+      <a href={href} target="_blank" rel="noopener noreferrer" title={label}>
+        {label}
       </a>
     ) : (
       <Link href={href}>
-        <a target={target} rel={rel}>
-          {item.title}
-        </a>
+        {label}
       </Link>
     );
   };
 
   return (
-    <ul>
+    <ul className={classes}>
       {menu.map((item: MenuItem) => {
-        const hasChildren = item.items && item.items.length > 0;
-
         return (
           <li key={item.id}>
             {renderLink(item)}
 
-            {hasChildren && (
+            {item.children?.length > 0 && (
               <ul>
-                {item.items!.map((subItem) => (
+                {item.children!.map((subItem) => (
                   <li key={subItem.id}>{renderLink(subItem)}</li>
                 ))}
               </ul>
