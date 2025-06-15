@@ -14,7 +14,7 @@ export default async function HomePage(props: { params: PageHomeParams }) {
 
   const page: PageContentProps = await getHomePage(params.locale);
 
-  return page ? <ContentPageItems blocks={page.content_page} /> : notFound();
+  return page ? <ContentPageItems blocks={page.content.layout} /> : notFound();
 }
 
 // SEO dynamique
@@ -32,28 +32,20 @@ export async function generateMetadata(props: {
   }
 
   return {
-    title: `≻ ${page.seo?.meta_title ?? page.title}`,
-    description: page.seo?.meta_desc ?? "",
+    title: `≻ ${page.meta.title ?? page.title}`,
+    description: page.meta.description ?? "",
     generator: "Dreamsite V3",
     authors: [{ name: "Kévin RIFA", url: "https://creative-eye.fr" }],
     openGraph: {
-      title: page.seo?.og_title,
-      description: page.seo?.og_desc,
-      images: [
-        {
-          url: page.seo?.social_image?.url || "",
-          width: page.seo?.social_image?.width,
-          height: page.seo?.social_image?.height,
-        },
-      ],
+      title: page.meta.title,
+      description: page.meta.description,
       url: reqHeaders.get("referer") || "",
       type: `website`,
     },
     twitter: {
       card: "summary_large_image",
-      title: page.seo?.twitter_title,
-      description: page.seo?.twitter_desc,
-      images: page.seo?.twitter_image?.url,
+      title: page.meta.title,
+      description: page.meta.description,
     },
   };
 }
