@@ -1,15 +1,19 @@
-import PageContentProps from "./page";
+import { PageContentProps } from "./page";
+
+export interface Menu {
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
+  items: MenuItem[];
+  id: string;
+}
 
 export interface MenuItem {
-  id: number;
-  title: string;
-  type: "INTERNAL" | "EXTERNAL";
-  path: string;
-  externalPath: string;
-  order: number;
-  related: PageContentProps;
-  items?: MenuItem[];
-  additionalFields: {
-    external: boolean;
-  };
+  type: 'page' | 'post' | 'external';
+  page?: PageContentProps;
+  label?: string;
+  url?: string;
+  newTab?: boolean;
+  children: MenuItem[];
+  id: string;
 }

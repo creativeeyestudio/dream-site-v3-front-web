@@ -19,9 +19,9 @@ export default async function WebPage(props: { params: PageParams }) {
 
   if (!page) notFound();
 
-  if (page.homepage) redirect(`/${params.locale}`);
+  if (page.config.homepage) redirect(`/${params.locale}`);
 
-  return <ContentPageItems blocks={page.content_page} />;
+  return <ContentPageItems blocks={page.content.layout} />;
 }
 
 // SEO dynamique
@@ -42,28 +42,20 @@ export async function generateMetadata(props: {
   }
 
   return {
-    title: `${page.seo?.meta_title ?? page.title} | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
-    description: page.seo?.meta_desc ?? "",
+    title: `${page.meta.title ?? page.title} | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
+    description: page.meta.description ?? "",
     generator: "Dreamsite V3",
     authors: [{ name: "Kévin RIFA", url: "https://creative-eye.fr" }],
     openGraph: {
-      title: page.seo?.og_title,
-      description: page.seo?.og_desc,
-      images: [
-        {
-          url: page.seo?.social_image?.url || "",
-          width: page.seo?.social_image?.width,
-          height: page.seo?.social_image?.height,
-        },
-      ],
+      title: page.meta.title,
+      description: page.meta.description,
       url: reqHeaders.get("referer") || "",
       type: `website`,
     },
     twitter: {
       card: "summary_large_image",
-      title: page.seo?.twitter_title,
-      description: page.seo?.twitter_desc,
-      images: page.seo?.twitter_image?.url,
+      title: page.meta.title,
+      description: page.meta.description,
     },
   };
 }

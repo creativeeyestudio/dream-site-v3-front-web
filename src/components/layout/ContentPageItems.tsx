@@ -7,7 +7,6 @@ import TextImage from "../panels/TextImage";
 import TextDoubleImage from "../panels/TextDoubleImage";
 import Parallax from "../panels/Parallax";
 import Heroscreen from "../panels/Heroscreen";
-import Gallery from "../panels/Gallery";
 import HtmlContent from "../panels/HtmlContent";
 
 interface ContentPageItemsProps {
@@ -22,55 +21,51 @@ const ContentPageItems: React.FC<ContentPageItemsProps> = ({ blocks }) => {
       {blocks.map((block, index) => {
         const isFirst = index === 0;
 
-        switch (block.__component) {
-          case "page.text":
+        switch (block.blockType) {
+          case "text":
             return (
               <Text
                 title={block.title}
-                text={block.text}
+                html={block.html}
                 first_block={isFirst}
                 key={index}
               />
             );
-          case "page.text-intro":
+          case "text-intro":
             return (
               <TextIntro
                 title={block.title}
-                text={block.text}
+                html={block.html}
                 first_block={isFirst}
                 key={index}
               />
             );
-          case "page.text-image":
+          case "text-image":
             return (
               <TextImage
                 title={block.title}
-                text={block.text}
+                html={block.html}
                 image={block.image}
                 first_block={isFirst}
                 key={index}
               />
             );
-          case "page.text-double-image":
+          case "text-double-image":
             return (
               <TextDoubleImage
                 title={block.title}
-                text={block.text}
+                html={block.html}
                 image1={block.image1}
                 image2={block.image2}
                 first_block={isFirst}
                 key={index}
               />
             );
-          case "page.parallax":
-            return (
-              <Parallax image={block.image} speed={block.speed} key={index} />
-            );
-          case "page.heroscreen":
-            return <Heroscreen images={block.images} key={index} />;
-          case "common.gallery":
-            return <Gallery images={block.images} key={index} />;
-          case "common.html_content":
+          case "parallax":
+            return <Parallax parallax_image={block.parallax_image} parallax_speed={block.parallax_speed} key={index} />;
+          case "heroscreen":
+            return <Heroscreen hero_image={block.hero_image} key={index} />;
+          case "html-content":
             return <HtmlContent content={block.content} key={index} />;
           default:
             return null;

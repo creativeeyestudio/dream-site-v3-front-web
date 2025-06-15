@@ -4,7 +4,7 @@ import { TextDoubleImageProps } from "@/interfaces/blocks";
 
 const TextDoubleImage: React.FC<TextDoubleImageProps> = ({
   title,
-  text,
+  html,
   image1,
   image2,
   first_block,
@@ -17,7 +17,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({
         <TitleTag className="text-double-img__title">{title}</TitleTag>
         <div
           className="text-double-img__text"
-          dangerouslySetInnerHTML={{ __html: text }}
+          dangerouslySetInnerHTML={{ __html: html }}
         ></div>
       </div>
 
@@ -26,7 +26,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({
           src={process.env.NEXT_PUBLIC_API_URL + image1.url}
           width={image1.width}
           height={image1.height}
-          alt={image1.alternativeText ?? ""}
+          alt={image1.alt ?? ""}
         />
       </figure>
 
@@ -36,7 +36,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({
             src={process.env.NEXT_PUBLIC_API_URL + image2.url}
             width={image2.width}
             height={image2.height}
-            alt={image2.alternativeText}
+            alt={image2.alt ?? ''}
           />
         </figure>
       ) : (

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const TextImage: React.FC<TextImageProps> = ({
   title,
-  text,
+  html,
   image,
   first_block,
 }) => {
@@ -15,7 +15,7 @@ const TextImage: React.FC<TextImageProps> = ({
         <TitleTag className="text-img__title">{title}</TitleTag>
         <div
           className="text-img__text"
-          dangerouslySetInnerHTML={{ __html: text }}
+          dangerouslySetInnerHTML={{ __html: html }}
         ></div>
       </div>
 
@@ -24,7 +24,7 @@ const TextImage: React.FC<TextImageProps> = ({
           src={process.env.NEXT_PUBLIC_API_URL + image.url}
           width={image.width}
           height={image.height}
-          alt={image.alternativeText ?? ""}
+          alt={image.alt ?? ""}
         />
       </figure>
     </section>

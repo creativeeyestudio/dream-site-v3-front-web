@@ -1,25 +1,13 @@
 export interface ImageDataProps {
-  alternativeText: string;
-  mime: string;
-  url: string | URL;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  filename: string;
+  mimeType: string;
+  filesize: string;
   width: number;
   height: number;
-  formats: {
-    thumbnail: {
-      width: number;
-      height: number;
-    };
-    small: {
-      width: number;
-      height: number;
-    };
-    medium: {
-      width: number;
-      height: number;
-    };
-    large: {
-      width: number;
-      height: number;
-    };
-  };
+  id: number;
+  url: string;
+  thumbnailURL: string | null
+  alt: string | null
 }
