@@ -8,7 +8,11 @@ type LoginResponse = {
   token: string;
 };
 
-export default async function connectToCMS(path: string): Promise<any> {
+interface CMSResponse<T> {
+  docs: T[];
+}
+
+export default async function connectToCMS<T>(path: string): Promise<T> {
   const loginRes = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/users/login`,
     {
@@ -42,6 +46,6 @@ export default async function connectToCMS(path: string): Promise<any> {
     throw new Error("Erreur lors de la récupération des données CMS");
   }
 
-  const data = await dataRes.json();
+  const data: CMSResponse<T> = await dataRes.json();
   return data.docs[0];
 }

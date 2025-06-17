@@ -1,6 +1,5 @@
 import { ImageDataProps } from "./image";
 import { PageContentProps } from "./page";
-import { ImageProps } from "next/image";
 
 export interface Menu {
   createdAt: string | Date;

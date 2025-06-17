@@ -8,7 +8,7 @@ if (!token || !baseUrl) {
 }
 
 async function getMenu(menuId: string, locale: string) {
-  const data = connectToCMS(`navigation?where[menuId][equals]=${menuId}`);
+  const data = connectToCMS(`navigation?where[menuId][equals]=${menuId}&locale=${locale}`);
   return data ?? null;
 }
 
