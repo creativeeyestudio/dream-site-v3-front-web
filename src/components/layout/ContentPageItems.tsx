@@ -62,7 +62,13 @@ const ContentPageItems: React.FC<ContentPageItemsProps> = ({ blocks }) => {
               />
             );
           case "parallax":
-            return <Parallax parallax_image={block.parallax_image} parallax_speed={block.parallax_speed} key={index} />;
+            return (
+              <Parallax
+                parallax_image={block.parallax_image}
+                parallax_speed={block.parallax_speed}
+                key={index}
+              />
+            );
           case "heroscreen":
             return <Heroscreen hero_image={block.hero_image} key={index} />;
           case "html-content":

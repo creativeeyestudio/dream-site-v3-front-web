@@ -4,11 +4,6 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
 
-  i18n: {
-    locales: ['en', 'fr', 'es'],
-    defaultLocale: 'fr'
-  },
-
   // Images
   images: {
     remotePatterns: [

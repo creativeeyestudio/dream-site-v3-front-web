@@ -1,29 +1,29 @@
-'use client'
+"use client";
 
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 interface ToggleLangProps {
-  currentLocale: string
+  currentLocale: string;
 }
 
 const ToggleLang: React.FC<ToggleLangProps> = ({ currentLocale }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const locales = ['en', 'fr', 'es'];
+  const locales = ["en", "fr", "es"];
 
   const handleLocaleChange = (targetLocale: string) => {
-    if(targetLocale === currentLocale) return;
+    if (targetLocale === currentLocale) return;
 
-    const segments = pathname.split('/');
+    const segments = pathname.split("/");
     segments[1] = targetLocale;
-    const newPath = segments.join('/');
+    const newPath = segments.join("/");
 
     router.push(newPath);
-  }
-  
-  return( 
+  };
+
+  return (
     <ul>
       {locales.map((locale) => (
         <li key={locale}>
@@ -31,7 +31,9 @@ const ToggleLang: React.FC<ToggleLangProps> = ({ currentLocale }) => {
             key={locale}
             onClick={() => handleLocaleChange(locale)}
             disabled={locale === currentLocale}
-          >{locale.toUpperCase()}</button>
+          >
+            {locale.toUpperCase()}
+          </button>
         </li>
       ))}
     </ul>
