@@ -36,7 +36,7 @@ const TextDoubleImage: React.FC<TextDoubleImageProps> = ({
             src={process.env.NEXT_PUBLIC_API_URL + image2.url}
             width={image2.width}
             height={image2.height}
-            alt={image2.alt ?? ''}
+            alt={image2.alt ?? ""}
           />
         </figure>
       ) : (

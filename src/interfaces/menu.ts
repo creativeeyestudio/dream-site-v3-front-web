@@ -1,19 +1,22 @@
+import { ImageDataProps } from "./image";
 import { PageContentProps } from "./page";
+import { ImageProps } from "next/image";
 
 export interface Menu {
   createdAt: string | Date;
   updatedAt: string | Date;
-  menuId: 'main-menu' | 'secondary-menu' | 'footer-menu';
+  menuId: "main-menu" | "secondary-menu" | "footer-menu";
   items: MenuItem[];
   id: string;
 }
 
 export interface MenuItem {
-  type: 'page' | 'post' | 'external';
+  type: "page" | "post" | "external";
   page?: PageContentProps;
   label?: string;
   url?: string;
   newTab?: boolean;
   children: MenuItem[];
   id: string;
+  image: ImageDataProps;
 }

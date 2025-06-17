@@ -15,7 +15,6 @@ const Newsletter: React.FC = () => {
         <Checkbox id="news_rgpd" />
         <Label htmlFor="news_rgpd">RGPD Label</Label>
       </div>
-      
     </Form>
   );
 };

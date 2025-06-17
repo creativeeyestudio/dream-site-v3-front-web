@@ -5,11 +5,13 @@ export async function getHomePage(locale: string) {
 }
 
 export async function getPage(locale: string, slug: string) {
-  return initPage(locale, slug)
+  return initPage(locale, slug);
 }
 
 function initPage(locale: string, slug: string | null = null) {
-  return (slug) 
+  return slug
     ? connectToCMS(`pages?where[slug][equals]=${slug}&locale=${locale}`)
-    : connectToCMS(`pages?where[config.homepage][equals]=true&locale=${locale}`);
+    : connectToCMS(
+        `pages?where[config.homepage][equals]=true&locale=${locale}`,
+      );
 }

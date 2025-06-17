@@ -9,7 +9,7 @@ if (!token || !baseUrl) {
 
 async function getMenu(menuId: string, locale: string) {
   const data = connectToCMS(`navigation?where[menuId][equals]=${menuId}`);
-  return data ?? null
+  return data ?? null;
 }
 
 export default getMenu;

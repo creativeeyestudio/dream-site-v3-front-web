@@ -8,6 +8,6 @@ export interface ImageDataProps {
   height: number;
   id: number;
   url: string;
-  thumbnailURL: string | null
-  alt: string | null
+  thumbnailURL: string | null;
+  alt: string | null;
 }
