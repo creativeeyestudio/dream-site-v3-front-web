@@ -15,7 +15,6 @@ export default async function HomePage(props: { params: PageHomeParams }) {
   const page: PageProps = await getHomePage(params.locale);
   const doc = page.docs?.[0];
 
-  
   return doc ? <ContentPageItems blocks={doc.content.layout} /> : notFound();
 }
 

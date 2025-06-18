@@ -18,22 +18,22 @@ export type BlockProps =
   | HTMLContentProps;
 
 export interface PageProps {
-  docs: PageDoc[]
+  docs: PageDoc[];
 }
 
 export interface PageDoc {
-  createdAt: string,
-  updatedAt: string,
-  title: string,
-  slug: string,
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  slug: string;
   content: {
-    layout: BlockProps[]
-  },
+    layout: BlockProps[];
+  };
   config: {
-    homepage: boolean,
-  },
+    homepage: boolean;
+  };
   meta: {
-    title: string,
-    description: string,
-  }
+    title: string;
+    description: string;
+  };
 }

@@ -10,9 +10,13 @@ interface NavigationProps {
   classes?: string;
 }
 
-const Navigation = async ({ menuId = null, locale, classes }: NavigationProps) => {
-  if (menuId == null || menuId == '') return;
-  
+const Navigation = async ({
+  menuId = null,
+  locale,
+  classes,
+}: NavigationProps) => {
+  if (menuId == null || menuId == "") return;
+
   const menu = await getMenu(menuId, locale);
 
   if (!menu) {
@@ -56,14 +60,16 @@ const Navigation = async ({ menuId = null, locale, classes }: NavigationProps) =
 
   const renderImages = (items: MenuItem[]) => (
     <div>
-      {items.map((item, index) => (
-        item.image ? <Image
-          src={item.image.url}
-          alt={item.image.alt ?? ""}
-          key={index}
-          fill={true}
-        /> : <></>
-      ))}
+      {items.map((item) =>
+        item.image ? (
+          <Image
+            key={item.id}
+            src={item.image.url}
+            alt={item.image.alt ?? ""}
+            fill
+          />
+        ) : null,
+      )}
     </div>
   );
 

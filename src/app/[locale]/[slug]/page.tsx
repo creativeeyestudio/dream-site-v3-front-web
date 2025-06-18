@@ -12,10 +12,7 @@ export type PageParams = Promise<{
 
 export default async function WebPage(props: { params: PageParams }) {
   const params = await props.params;
-  const page: PageProps | null = await getPage(
-    params.locale,
-    params.slug,
-  );
+  const page: PageProps | null = await getPage(params.locale, params.slug);
 
   const doc = page?.docs[0];
 
@@ -32,10 +29,7 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const reqHeaders = await headers();
   const params = await props.params;
-  const page: PageProps | null = await getPage(
-    params.locale,
-    params.slug,
-  );
+  const page: PageProps | null = await getPage(params.locale, params.slug);
   const doc = page?.docs[0];
 
   if (!page) {
