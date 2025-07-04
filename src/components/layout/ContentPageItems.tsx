@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { BlockProps } from "@/interfaces/page";
 import Text from "../panels/Text";
 import TextIntro from "../panels/TextIntro";
