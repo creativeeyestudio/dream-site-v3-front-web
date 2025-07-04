@@ -11,6 +11,7 @@ export interface settingsProps {
         defaultImg: ImageDataProps
     }
     websiteConfigGroup: {
+        title: string
         logo: ImageDataProps
         favicon: ImageDataProps
         homepage: PageDoc
