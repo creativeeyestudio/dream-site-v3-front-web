@@ -3,7 +3,7 @@ import ContentPageItems from "@/components/layout/ContentPageItems";
 import { PageDoc } from "@/interfaces/page";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound, permanentRedirect } from "next/navigation";
+import { notFound, redirect, permanentRedirect } from "next/navigation";
 import { getSettings } from "@/api/settings";
 
 export type PageParams = Promise<{
@@ -15,6 +15,8 @@ export default async function WebPage(props: { params: PageParams }) {
   const params = await props.params;
   const settings = await getSettings(params.locale);
   const page: PageDoc = await getPage(params.locale, params.slug);
+
+  if (settings.maintenanceGroup.maintenance) return redirect('/maintenance')
 
   if (!page) notFound();
 

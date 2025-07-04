@@ -1,7 +1,7 @@
-import {notFound} from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import ContentPageItems from "@/components/layout/ContentPageItems";
-import {Metadata} from "next";
-import {headers} from "next/headers";
+import { Metadata } from "next";
+import { headers } from "next/headers";
 import {getSettings} from "@/api/settings";
 
 export type PageHomeParams = Promise<{
@@ -25,6 +25,8 @@ export async function generateMetadata({ params }: { params: PageHomeParams }): 
 
   const settings = await getSettings(locale);
   const page = settings.websiteConfigGroup.homepage;
+
+  if (settings.maintenanceGroup.maintenance) return redirect('/maintenance')
 
   if (!page) {
     return { title: "Page introuvable" };
