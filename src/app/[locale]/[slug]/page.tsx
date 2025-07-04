@@ -1,9 +1,10 @@
 import { getPage } from "@/api/pages";
 import ContentPageItems from "@/components/layout/ContentPageItems";
-import { PageProps } from "@/interfaces/page";
-import { Metadata } from "next";
+import { PageDoc } from "@/interfaces/page";
+import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
+import { getSettings } from "@/api/settings";
 
 export type PageParams = Promise<{
   locale: string;
@@ -12,47 +13,49 @@ export type PageParams = Promise<{
 
 export default async function WebPage(props: { params: PageParams }) {
   const params = await props.params;
-  const page: PageProps | null = await getPage(params.locale, params.slug);
-
-  const doc = page?.docs[0];
+  const settings = await getSettings(params.locale);
+  const page: PageDoc = await getPage(params.locale, params.slug);
 
   if (!page) notFound();
 
-  if (doc?.config.homepage) redirect(`/${params.locale}`);
+  if (settings.websiteConfigGroup.homepage === page) permanentRedirect(`/${params.locale}`)
 
-  return doc ? <ContentPageItems blocks={doc.content.layout} /> : notFound();
+  return <ContentPageItems blocks={page.content.layout} />;
 }
 
 // SEO dynamique
-export async function generateMetadata(props: {
-  params: PageParams;
-}): Promise<Metadata> {
-  const reqHeaders = await headers();
-  const params = await props.params;
-  const page: PageProps | null = await getPage(params.locale, params.slug);
-  const doc = page?.docs[0];
+export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
+  const headersList = await headers();
+  const { locale, slug } = params;
+
+  const [settings, page] = await Promise.all([
+    getSettings(locale),
+    getPage(locale, slug),
+  ]);
 
   if (!page) {
-    return {
-      title: "Page introuvable",
-    };
+    return { title: "Page introuvable" };
   }
 
+  const { title, description } = page.meta;
+  const fullTitle = `${title ?? page.title} | ${settings.websiteConfigGroup.title}`;
+  const referer = headersList.get("referer") || "";
+
   return {
-    title: `${doc?.meta.title ?? doc?.title} | ${process.env.NEXT_PUBLIC_SITE_NAME}`,
-    description: doc?.meta.description ?? "",
+    title: fullTitle,
+    description: description ?? "",
     generator: "Dreamsite V3",
     authors: [{ name: "Kévin RIFA", url: "https://creative-eye.fr" }],
     openGraph: {
-      title: doc?.meta.title,
-      description: doc?.meta.description,
-      url: reqHeaders.get("referer") || "",
+      title,
+      description,
+      url: referer,
       type: `website`,
     },
     twitter: {
       card: "summary_large_image",
-      title: doc?.meta.title,
-      description: doc?.meta.description,
+      title,
+      description,
     },
   };
 }

@@ -10,44 +10,46 @@ export type PageHomeParams = Promise<{
 
 export default async function HomePage(props: { params: PageHomeParams }) {
   const params = await props.params;
-
   const settings = await getSettings(params.locale);
+  const homepage = settings.websiteConfigGroup.homepage;
 
-  const doc = settings.websiteConfigGroup.homepage;
-
-  return doc ? <ContentPageItems blocks={doc.content.layout} /> : notFound();
+  return homepage
+      ? <ContentPageItems blocks={homepage.content.layout} />
+      : notFound();
 }
 
 // SEO dynamique
-export async function generateMetadata(props: {
-  params: PageHomeParams;
-}): Promise<Metadata> {
-  const reqHeaders = await headers();
-  const params = await props.params;
-  const settings = await getSettings(params.locale);
+export async function generateMetadata({ params }: { params: PageHomeParams }): Promise<Metadata> {
+  const headersList = await headers();
+  const { locale } = params;
+
+  const settings = await getSettings(locale);
   const page = settings.websiteConfigGroup.homepage;
 
   if (!page) {
-    return {
-      title: "Page introuvable",
-    };
+    return { title: "Page introuvable" };
   }
 
+  const { title, description } = page.meta;
+  const siteTitle = settings.websiteConfigGroup.title;
+  const fullTitle = `≻ ${title ?? siteTitle}`;
+  const referer = headersList.get("referer") || "";
+
   return {
-    title: `≻ ${page.meta.title ?? settings.websiteConfigGroup.title}`,
-    description: page.meta.description ?? "",
+    title: fullTitle,
+    description: description ?? "",
     generator: "Dreamsite V3",
     authors: [{ name: "Kévin RIFA", url: "https://creative-eye.fr" }],
     openGraph: {
-      title: page.meta.title,
-      description: page.meta.description,
-      url: reqHeaders.get("referer") || "",
-      type: `website`,
+      title,
+      description,
+      url: referer,
+      type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: page.meta.title,
-      description: page.meta.description,
+      title,
+      description,
     },
   };
 }
