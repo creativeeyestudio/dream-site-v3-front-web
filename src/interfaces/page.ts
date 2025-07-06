@@ -7,6 +7,7 @@ import {
   TextIntroProps,
   TextProps,
 } from "./blocks";
+import { WebsiteProps } from "./website"
 
 export type BlockProps =
   | TextProps
@@ -15,23 +16,23 @@ export type BlockProps =
   | TextDoubleImageProps
   | ParallaxProps
   | HeroscreenProps
-  | HTMLContentProps;
+  | HTMLContentProps
 
 export interface PageProps {
-  docs: PageDoc[];
+  docs: PageDoc[]
 }
 
 export interface PageDoc {
-  createdAt: string;
-  updatedAt: string;
-  title: string;
-  slug: string;
+  createdAt: string
+  updatedAt: string
+  title: string
+  slug: string
   content: {
-    layout: BlockProps[];
-  };
+    layout: BlockProps[]
+  }
   config: {
-    homepage: boolean;
-  };
+    site: WebsiteProps
+  }
   meta: {
     title: string;
     description: string;

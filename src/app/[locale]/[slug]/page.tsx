@@ -20,7 +20,7 @@ export default async function WebPage(props: { params: PageParams }) {
 
   if (!page) notFound();
 
-  if (settings.websiteConfigGroup.homepage === page) permanentRedirect(`/${params.locale}`)
+  if (settings.identityGroup.homepage === page) permanentRedirect(`/${params.locale}`)
 
   return <ContentPageItems blocks={page.content.layout} />;
 }
@@ -40,7 +40,7 @@ export async function generateMetadata(props: { params: PageParams }): Promise<M
   }
 
   const { title, description } = page.meta;
-  const fullTitle = `${title ?? page.title} | ${settings.websiteConfigGroup.title}`;
+  const fullTitle = `${title ?? page.title} | ${settings.identityGroup.homepage.title}`;
   const referer = headersList.get("referer") || "";
 
   return {

@@ -11,7 +11,7 @@ export type PageHomeParams = Promise<{
 export default async function HomePage(props: { params: PageHomeParams }) {
   const params = await props.params;
   const settings = await getSettings(params.locale);
-  const homepage = settings.websiteConfigGroup.homepage;
+  const homepage = settings.identityGroup.homepage;
 
   return homepage
       ? <ContentPageItems blocks={homepage.content.layout} />
@@ -23,14 +23,14 @@ export async function generateMetadata(props: { params: PageHomeParams }): Promi
   const headersList = await headers();
   const params = await props.params;
   const settings = await getSettings(params.locale);
-  const page = settings.websiteConfigGroup.homepage;
+  const page = settings.identityGroup.homepage;
 
   if (settings.maintenanceGroup.maintenance) return redirect('/maintenance')
 
   if (!page) return { title: "Page introuvable" };
 
   const { title, description } = page.meta;
-  const siteTitle = settings.websiteConfigGroup.title;
+  const siteTitle = settings.identityGroup.homepage.title;
   const fullTitle = `≻ ${title ?? siteTitle}`;
   const referer = headersList.get("referer") || "";
 
