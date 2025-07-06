@@ -11,72 +11,62 @@ interface NavigationProps {
 }
 
 const Navigation = async ({
-  menuId = null,
+  menuId,
   locale,
   classes,
 }: NavigationProps) => {
-  if (menuId == null || menuId == "") return;
+  if (!menuId) return null;
 
-  const menu = await getMenu(menuId, locale);
+  const { items } = await getMenu(menuId, locale);
 
-  if (!menu) {
-    console.error(`Menu non trouvé avec l'ID ${menuId}`);
-    return;
-  }
-
-  const getLinkProps = (item: MenuItem) => {
-    const href = item.page ? `/${locale}/${item.page.slug}` : (item.url ?? "#");
+  function LinkOrAnchor({ item }: { item: MenuItem }) {
+    const href = item.page ? `/${locale}/${item.page.slug}` : item.url ?? "#";
     const label = item.page?.title ?? item.label ?? "";
-    return { href, label };
-  };
-
-  const renderLink = (item: MenuItem) => {
-    const { href, label } = getLinkProps(item);
-
     return item.type === "external" ? (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        title="Nouvel onglet"
-      >
+      <a href={href} target="_blank" rel="noopener noreferrer">
         {label}
       </a>
     ) : (
       <Link href={href}>{label}</Link>
     );
-  };
+  }
 
-  const renderItems = (items: MenuItem[]) => (
+  const renderItems = (nodes: MenuItem[]) => (
     <ul>
-      {items.map((item) => (
-        <li key={item.id}>
-          {renderLink(item)}
-          {item.children?.length ? renderItems(item.children) : null}
+      {nodes.map((node) => (
+        <li key={node.id}>
+          <LinkOrAnchor item={node} />
+          {node.children?.length ? renderItems(node.children) : null}
         </li>
       ))}
     </ul>
   );
 
-  const renderImages = (items: MenuItem[]) => (
-    <div>
-      {items.map((item) =>
-        item.image ? (
+  const renderImages = (nodes: MenuItem[]) => {
+    const images = nodes
+      .filter((item) => item.image?.url)
+      .map((item) => (
+        <div
+          key={item.id}
+          className="relative w-64 h-40 mb-4 overflow-hidden rounded-md shadow"
+        >
           <Image
-            key={item.id}
-            src={item.image.url}
-            alt={item.image.alt ?? ""}
+            src={item.image!.url}
+            alt={item.image!.alt ?? ""}
             fill
+            sizes="(max-width: 768px) 100vw, 33vw"
+            className="object-cover"
           />
-        ) : null,
-      )}
-    </div>
-  );
+        </div>
+      ));
+
+    return images.length ? <div className="mt-4">{images}</div> : null;
+  };
 
   return (
     <>
-      <nav className={classes}>{renderItems(menu.items)}</nav>
-      <div>{renderImages(menu.items)}</div>
+      <nav className={classes}>{renderItems(items)}</nav>
+      <div>{renderImages(items)}</div>
     </>
   );
 };
