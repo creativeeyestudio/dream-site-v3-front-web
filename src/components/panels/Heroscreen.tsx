@@ -43,7 +43,7 @@ const Heroscreen: React.FC<HeroscreenProps> = (content: HeroscreenProps) => {
   ) : process.env.NEXT_PUBLIC_API_URL != undefined ? (
     <div className="heroscreen__container">
       <Image
-        src={process.env.NEXT_PUBLIC_API_URL + content.hero_image[0].url}
+        src={process.env.NEXT_PUBLIC_API_URL + content.heroImage[0].url}
         alt={content.heroImage[0].alt ?? "Pas de text alt"}
         fill={true}
         objectFit="cover"

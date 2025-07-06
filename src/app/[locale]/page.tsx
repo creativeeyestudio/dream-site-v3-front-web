@@ -19,18 +19,15 @@ export default async function HomePage(props: { params: PageHomeParams }) {
 }
 
 // SEO dynamique
-export async function generateMetadata({ params }: { params: PageHomeParams }): Promise<Metadata> {
+export async function generateMetadata(props: { params: PageHomeParams }): Promise<Metadata> {
   const headersList = await headers();
-  const { locale } = params;
-
-  const settings = await getSettings(locale);
+  const params = await props.params;
+  const settings = await getSettings(params.locale);
   const page = settings.websiteConfigGroup.homepage;
 
   if (settings.maintenanceGroup.maintenance) return redirect('/maintenance')
 
-  if (!page) {
-    return { title: "Page introuvable" };
-  }
+  if (!page) return { title: "Page introuvable" };
 
   const { title, description } = page.meta;
   const siteTitle = settings.websiteConfigGroup.title;

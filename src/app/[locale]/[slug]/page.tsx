@@ -26,13 +26,13 @@ export default async function WebPage(props: { params: PageParams }) {
 }
 
 // SEO dynamique
-export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
+export async function generateMetadata(props: { params: PageParams }): Promise<Metadata> {
   const headersList = await headers();
-  const { locale, slug } = params;
+  const params = await props.params;
 
   const [settings, page] = await Promise.all([
-    getSettings(locale),
-    getPage(locale, slug),
+    getSettings(params.locale),
+    getPage(params.locale, params.slug),
   ]);
 
   if (!page) {
