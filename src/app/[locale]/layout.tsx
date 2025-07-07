@@ -10,11 +10,11 @@ export default async function RootLayout({ children, params }: {
   params: Promise<LayoutParams>;
 }) {
   const { locale } = await params;
-
+  
   return (
     <html lang={locale} dir="ltr">
       <body>
-        <Header />
+        <Header locale={locale} />
         <main>{children}</main>
         <Footer locale={locale} />
       </body>

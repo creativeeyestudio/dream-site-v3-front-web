@@ -1,8 +1,9 @@
-import { notFound }  from 'next/navigation';
+import { notFound, redirect }  from 'next/navigation';
 import type { Metadata } from "next";
 import { fetchPage } from "@/lib/cms";
 import ContentPageItems from "@/components/layout/ContentPageItems";
 import { headers } from 'next/headers'
+import { isHomePage } from '@/lib/isHomePage';
 
 /* --------------------------------------------------
    Types & helpers
@@ -46,6 +47,8 @@ export default async function WebPage(props: { params: PageParams }) {
 
   const page = await fetchPage(site, slug, locale);
   if (!page) return notFound();
+
+  if (await isHomePage(page)) redirect(`/${locale}`);
 
   return <ContentPageItems blocks={page.content.layout} />
 }

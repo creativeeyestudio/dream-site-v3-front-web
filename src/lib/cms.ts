@@ -1,3 +1,4 @@
+import { NavigationProps } from "@/interfaces/navigation";
 import {Page} from "@/interfaces/page";
 import {SettingsProps} from "@/interfaces/settings";
 
@@ -26,9 +27,16 @@ export async function fetchSettings(): Promise<SettingsProps | null> {
 /* --------------------------------------------------
    Pages
 -------------------------------------------------- */
+/**
+ * @param site 
+ * @param locale 
+ * @returns 
+ */
 export async function fetchHomePage(site: string, locale: string) {
     const settings = await fetchSettings();
-    const res = await fetch(`${CMS_URL}/api/pages/${settings?.identityGroup?.homepage.id}?depth=2&locale=${locale}`, {
+    if (!settings) return null;
+
+    const res = await fetch(`${CMS_URL}/api/pages/${settings.identityGroup?.homepage.id}?depth=2&locale=${locale}`, {
         headers: { 'x-website': site },
         next: { revalidate: 0 },
     })
@@ -36,7 +44,6 @@ export async function fetchHomePage(site: string, locale: string) {
     if (!res.ok) return null;
     return res.json();
 }
-
 
 /**
  * @param site 
@@ -53,5 +60,26 @@ export async function fetchPage(site: string, slug: string, locale: string): Pro
     if (!res.ok) return null;
 
     const { docs } = await res.json() as { docs: Page[] };
+    return docs?.[0] ?? null;
+}
+
+/* --------------------------------------------------
+   Navigation
+-------------------------------------------------- */
+/**
+ * @param site 
+ * @param menuId 
+ * @param locale 
+ * @returns 
+ */
+export async function fetchNavigation(site: string, menuId: string, locale: string): Promise<NavigationProps | null> {
+    const res = await fetch(`${CMS_URL}/api/navigation?where[menuId][equals]=${menuId}&depth=2&locale=${locale}`, {
+        headers: { 'x-website': site },
+        next: { revalidate: 0 },
+    })
+
+    if (!res.ok) return null;
+
+    const { docs } = await res.json() as { docs: NavigationProps[] };
     return docs?.[0] ?? null;
 }

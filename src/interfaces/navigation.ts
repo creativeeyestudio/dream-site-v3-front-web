@@ -1,7 +1,7 @@
 import { ImageDataProps } from "./image";
 import { Page } from "./page";
 
-export interface Menu {
+export interface NavigationProps {
   createdAt: string | Date;
   updatedAt: string | Date;
   menuId: "main-menu" | "secondary-menu" | "footer-menu";
