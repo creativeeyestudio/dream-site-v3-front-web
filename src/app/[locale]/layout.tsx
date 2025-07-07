@@ -1,19 +1,20 @@
 import Footer from "@/components/layout/Footer";
 import Header from "@/components/layout/Header";
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
+interface LayoutParams {
+  locale: string;
+}
+
+export default async function RootLayout({ children, params }: {
   children: React.ReactNode;
-  params: {locale: string };
+  params: Promise<LayoutParams>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
 
   return (
     <html lang={locale} dir="ltr">
       <body>
-        <Header locale={locale} />
+        <Header />
         <main>{children}</main>
         <Footer locale={locale} />
       </body>

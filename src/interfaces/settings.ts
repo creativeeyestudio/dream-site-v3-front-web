@@ -1,5 +1,5 @@
 import { ImageDataProps } from "./image"
-import { PageDoc } from "./page"
+import { Page } from "./page"
 
 export interface SettingsProps {
     createdAt: string
@@ -8,7 +8,7 @@ export interface SettingsProps {
     identityGroup: {
         logo: ImageDataProps
         favicon: ImageDataProps
-        homepage: PageDoc
+        homepage: Page
     }
     maintenanceGroup: {
         maintenance: boolean

@@ -7,7 +7,7 @@ import {
   TextIntroProps,
   TextProps,
 } from "./blocks";
-import { WebsiteProps } from "./website"
+import { SettingsProps } from "./settings";
 
 export type BlockProps =
   | TextProps
@@ -18,7 +18,7 @@ export type BlockProps =
   | HeroscreenProps
   | HTMLContentProps
 
-export interface PageDoc {
+export interface Page {
   createdAt: string
   updatedAt: string
   title: string
@@ -27,7 +27,7 @@ export interface PageDoc {
     layout: BlockProps[]
   }
   config: {
-    site: WebsiteProps
+    site: SettingsProps
   }
   meta: {
     title: string;

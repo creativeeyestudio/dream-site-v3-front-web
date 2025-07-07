@@ -1,12 +1,13 @@
 import { Metadata } from "next";
 import {fetchHomePage} from "@/lib/cms";
 import ContentPageItems from "@/components/layout/ContentPageItems";
+import { notFound } from "next/navigation";
 
-export type PageHomeParams = {
+export type PageHomeParams = Promise<{
   locale: string;
   slug: string;
   headers: () => Headers;
-};
+}>;
 
 /* --------------------------------------------------
    SEO dynamique

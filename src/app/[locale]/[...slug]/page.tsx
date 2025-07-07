@@ -2,24 +2,25 @@ import { notFound }  from 'next/navigation';
 import type { Metadata } from "next";
 import { fetchPage } from "@/lib/cms";
 import ContentPageItems from "@/components/layout/ContentPageItems";
+import { headers } from 'next/headers'
 
 /* --------------------------------------------------
    Types & helpers
 -------------------------------------------------- */
-export type PageParams = {
+export type PageParams = Promise<{
   locale: string;
   slug: string;
-  headers: () => Headers;
-};
+}>;
 
 /* --------------------------------------------------
    SEO dynamique
 -------------------------------------------------- */
 export async function generateMetadata(props: { params: PageParams }): Promise<Metadata> {
-  const params = await props.params;
-  const site = params.headers().get('x-website')!;
+  const { locale, slug } = await props.params;
+  const headersList = await headers();
+  const site = headersList.get('x-website') ?? 'default-site';
 
-  const page = await fetchPage(site, params.slug, params.locale);
+  const page = await fetchPage(site, slug, locale);
   if (!page) return { title: "Page introuvable" };
 
   const { title, description } = page.meta;
@@ -38,10 +39,12 @@ export async function generateMetadata(props: { params: PageParams }): Promise<M
 /* --------------------------------------------------
    Rendu de la page
 -------------------------------------------------- */
-export default async function WebPage({ params }: { params: PageParams }) {
-  const site = params.headers().get('x-website')!;
+export default async function WebPage(props: { params: PageParams }) {
+  const { locale, slug } = await props.params;
+  const headersList = await headers();
+  const site = headersList.get('x-website') ?? 'default-site';
 
-  const page = await fetchPage(site, params.slug, params.locale);
+  const page = await fetchPage(site, slug, locale);
   if (!page) return notFound();
 
   return <ContentPageItems blocks={page.content.layout} />
