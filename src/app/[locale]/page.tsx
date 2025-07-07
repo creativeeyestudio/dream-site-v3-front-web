@@ -1,54 +1,41 @@
-import { notFound, redirect } from "next/navigation";
-import ContentPageItems from "@/components/layout/ContentPageItems";
 import { Metadata } from "next";
-import { headers } from "next/headers";
-import {getSettings} from "@/api/settings";
+import {fetchHomePage} from "@/lib/cms";
+import ContentPageItems from "@/components/layout/ContentPageItems";
 
-export type PageHomeParams = Promise<{
+export type PageHomeParams = {
   locale: string;
-}>;
+  slug: string;
+  headers: () => Headers;
+};
 
-export default async function HomePage(props: { params: PageHomeParams }) {
-  const params = await props.params;
-  const settings = await getSettings(params.locale);
-  const homepage = settings.identityGroup.homepage;
-
-  return homepage
-      ? <ContentPageItems blocks={homepage?.content?.layout} />
-      : notFound();
-}
-
-// SEO dynamique
+/* --------------------------------------------------
+   SEO dynamique
+-------------------------------------------------- */
 export async function generateMetadata(props: { params: PageHomeParams }): Promise<Metadata> {
-  const headersList = await headers();
   const params = await props.params;
-  const settings = await getSettings(params.locale);
-  const page = settings.identityGroup.homepage;
+  const site = params.headers().get('x-website')!;
+  const page = await fetchHomePage(site, params.locale);
 
-  if (settings.maintenanceGroup.maintenance) return redirect('/maintenance')
+  if (!page) return { title: 'Page introuvable' };
 
-  if (!page) return { title: "Page introuvable" };
-
-  const { title, description } = page?.meta;
-  const siteTitle = settings.identityGroup.homepage.title;
-  const fullTitle = `≻ ${title ?? siteTitle}`;
-  const referer = headersList.get("referer") || "";
+  const { title, description } = page.meta;
+  const fullTitle = `${title ?? page.title}`;
 
   return {
-    title: fullTitle,
-    description: description ?? "",
-    generator: "Dreamsite V3",
-    authors: [{ name: "Kévin RIFA", url: "https://creative-eye.fr" }],
-    openGraph: {
-      title,
-      description,
-      url: referer,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-    },
+    title       : fullTitle,
+    description : description ?? '',
   };
+}
+
+/* --------------------------------------------------
+   Rendu de la page
+-------------------------------------------------- */
+export default async function HomePage(props: { params: PageHomeParams }) {
+  const params = await props.params;
+  const site = params.headers().get('x-website')!;
+  const page = await fetchHomePage(site, params.locale);
+
+  if (!page) return notFound();
+
+  return <ContentPageItems blocks={page.content.layout} />;
 }

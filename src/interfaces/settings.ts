@@ -1,7 +1,7 @@
 import { ImageDataProps } from "./image"
 import { PageDoc } from "./page"
 
-export interface WebsiteProps {
+export interface SettingsProps {
     createdAt: string
     updatedAt: string
     title: string

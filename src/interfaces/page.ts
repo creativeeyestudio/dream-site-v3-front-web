@@ -18,10 +18,6 @@ export type BlockProps =
   | HeroscreenProps
   | HTMLContentProps
 
-export interface PageProps {
-  docs: PageDoc[]
-}
-
 export interface PageDoc {
   createdAt: string
   updatedAt: string
@@ -36,5 +32,6 @@ export interface PageDoc {
   meta: {
     title: string;
     description: string;
-  };
+  }
+  id: string
 }

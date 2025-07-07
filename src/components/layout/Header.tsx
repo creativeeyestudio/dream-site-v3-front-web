@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ locale }) => {
       <header></header>
       <div className="nav--primary">
         <Navigation
-          menuId={'686b419f31e3d12fe17df2d8'}
+          menuId={undefined}
           locale={locale}
           classes={undefined}
         />
