@@ -3,15 +3,27 @@ import { WebsiteProps } from "@/interfaces/website";
 
 export async function getSettings(locale: string): Promise<WebsiteProps> {
     const token = await connectToPayloadCMS();
+    
+    const url = new URL(
+        `/api/settings/${process.env.SITE_ID}`, 
+        process.env.NEXT_PUBLIC_API_URL
+    );
+    url.searchParams.set("depth", "2");
+    // url.searchParams.set("draft", "false");
+    url.searchParams.set("locale", locale);
 
-    const apiSlug = `${process.env.NEXT_PUBLIC_API_URL}/api/settings/${process.env.SITE_ID}?depth=2&draft=false&locale=${locale}`;
+    const res = await fetch(url.href, {
+        headers: {
+        Authorization: `JWT ${token}`,          // ←  le bon préfixe
+        Accept: "application/json",
+        },
+        cache: "no-store",                        // évite de servir un 403 mis en cache
+    });
 
-    const data = await fetch(apiSlug, {
-        headers: { Authorization: `JWT ${token}` },
-    })
+    if (!res.ok) {
+        const detail = await res.text().catch(() => "—");
+        throw new Error(`Settings (${res.status})\n${detail}`);
+    }
 
-    if (!data.ok) console.error(`Settings not found`);
-
-    const settings = await data.json();
-    return settings;
+    return res.json() as Promise<WebsiteProps>;
 }

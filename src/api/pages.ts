@@ -4,16 +4,17 @@ import connectToPayloadCMS from "./connectToPayloadCMS";
 export async function getPage(locale: string, slug: string) {
   const token = await connectToPayloadCMS();
 
-  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/pages?where[slug][equals]=${slug}&[config.published][equals]=2&locale=${locale}`;
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/pages?where[slug][equals]=${slug}&locale=${locale}`;
 
   const data = await fetch(apiUrl, {
-      next: { revalidate: 300 },
+      // next: { revalidate: 300 },
       headers: { Authorization: `JWT ${token}` },
+      // cache: 'no-store'
     },
   );
 
   if (!data.ok) {
-    console.error(`Page not found with url : ${process.env.NEXT_PUBLIC_API_URL}/api/pages${slug}`);
+    console.error(`Page not found with url : ${apiUrl}`);
     notFound();
   }
 

@@ -14,7 +14,7 @@ export default async function HomePage(props: { params: PageHomeParams }) {
   const homepage = settings.identityGroup.homepage;
 
   return homepage
-      ? <ContentPageItems blocks={homepage.content.layout} />
+      ? <ContentPageItems blocks={homepage?.content?.layout} />
       : notFound();
 }
 
@@ -29,7 +29,7 @@ export async function generateMetadata(props: { params: PageHomeParams }): Promi
 
   if (!page) return { title: "Page introuvable" };
 
-  const { title, description } = page.meta;
+  const { title, description } = page?.meta;
   const siteTitle = settings.identityGroup.homepage.title;
   const fullTitle = `≻ ${title ?? siteTitle}`;
   const referer = headersList.get("referer") || "";

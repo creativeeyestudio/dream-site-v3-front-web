@@ -3,7 +3,7 @@ import ContentPageItems from "@/components/layout/ContentPageItems";
 import { PageDoc } from "@/interfaces/page";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { notFound, redirect, permanentRedirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getSettings } from "@/api/settings";
 
 export type PageParams = Promise<{
@@ -16,11 +16,11 @@ export default async function WebPage(props: { params: PageParams }) {
   const settings = await getSettings(params.locale);
   const page: PageDoc = await getPage(params.locale, params.slug);
 
-  if (settings.maintenanceGroup.maintenance) return redirect('/maintenance')
+  if (settings?.maintenanceGroup?.maintenance) return redirect('/maintenance');
 
   if (!page) notFound();
 
-  if (settings.identityGroup.homepage === page) permanentRedirect(`/${params.locale}`)
+  if (settings.identityGroup.homepage.slug === page.slug) return redirect(`/${params.locale}`);
 
   return <ContentPageItems blocks={page.content.layout} />;
 }
@@ -40,7 +40,7 @@ export async function generateMetadata(props: { params: PageParams }): Promise<M
   }
 
   const { title, description } = page.meta;
-  const fullTitle = `${title ?? page.title} | ${settings.identityGroup.homepage.title}`;
+  const fullTitle = `${title ?? page.title} | ${settings.title}`;
   const referer = headersList.get("referer") || "";
 
   return {
@@ -61,3 +61,4 @@ export async function generateMetadata(props: { params: PageParams }): Promise<M
     },
   };
 }
+

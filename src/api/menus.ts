@@ -2,12 +2,12 @@ import connectToPayloadCMS from "./connectToPayloadCMS";
 
 async function getMenu(menuId: string, locale: string) {
   const token = await connectToPayloadCMS();
-  const apiSlug = `${encodeURIComponent(menuId)}?locale=${locale}`;
+  const apiSlug = `${menuId}?locale=${locale}`;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/navigation/${apiSlug}`,
     {
-      next: { revalidate: 300 },
+      // next: { revalidate: 300 },
       headers: { Authorization: `JWT ${token}` },
     },
   );
