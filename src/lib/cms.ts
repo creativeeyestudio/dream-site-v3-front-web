@@ -10,10 +10,17 @@ const CMS_URL = process.env.API_URL!;
 /* --------------------------------------------------
    Settings
 -------------------------------------------------- */
+let cachedSettings: SettingsProps | null = null;
+
 export async function fetchSettings(): Promise<SettingsProps | null> {
+    if (cachedSettings) return cachedSettings;
+    
     const res = await fetch(`${CMS_URL}/api/settings/${SETTINGS_ID}`);
+
     if (!res.ok) return null;
-    return res.json();
+    
+    cachedSettings = await res.json() as SettingsProps;
+    return cachedSettings;
 }
 
 /* --------------------------------------------------
@@ -21,13 +28,10 @@ export async function fetchSettings(): Promise<SettingsProps | null> {
 -------------------------------------------------- */
 export async function fetchHomePage(site: string, locale: string) {
     const settings = await fetchSettings();
-    const url = new URL(`${CMS_URL}/api/pages/${settings?.identityGroup.homepage.id}`);
-    url.searchParams.set('locale', locale);
-
-    const res = await fetch(url.toString(), {
+    const res = await fetch(`${CMS_URL}/api/pages/${settings?.identityGroup?.homepage.id}?depth=2&locale=${locale}`, {
         headers: { 'x-website': site },
-        next   : { revalidate: 0 },
-    });
+        next: { revalidate: 0 },
+    })
 
     if (!res.ok) return null;
     return res.json();
